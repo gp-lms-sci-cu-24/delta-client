@@ -1,8 +1,15 @@
+import { Provider } from "react-redux";
+import store from "@app/root";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./AppRouter";
+
 function App() {
   return (
-    <>
-      <p className="read-the-docs">Initiate App</p>
-    </>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </Provider>
   );
 }
 

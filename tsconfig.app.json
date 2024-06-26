@@ -22,15 +22,19 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "./src",
+
+    /* Abslout path config */
+    "baseUrl": ".",
     "paths": {
-      "@*": ["/*"],
-      "@components/*": ["components/*"],
-      "@service/*": ["service/*"],
-      "@app/*": ["app/*"],
-      "@utils/*": ["utils/*"],
-      "@features/*": ["features/*"],
-      "@layouts/*": ["layouts/*"]
+      "@/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@features/*": ["src/features/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"],
+      "@constants/*": ["src/constants/*"]
     }
   },
   "include": ["src"]

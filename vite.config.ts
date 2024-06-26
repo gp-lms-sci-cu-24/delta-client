@@ -7,13 +7,15 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "/src/"),
-      "@components": resolve(__dirname, "/src/components"),
-      "@utils": resolve(__dirname, "/src/utils"),
-      "@services": resolve(__dirname, "/src/services"),
-      "@assets": resolve(__dirname, "/src/assets"),
-      "@app": resolve(__dirname, "/src/app"),
-      "@layouts": resolve(__dirname, "/src/layouts"),
+      "@": resolve(__dirname, "src"),
+      "@app": resolve(__dirname, "src/app"),
+      "@assets": resolve(__dirname, "src/assets"),
+      "@components": resolve(__dirname, "src/components"),
+      "@features": resolve(__dirname, "src/features"),
+      "@layouts": resolve(__dirname, "src/layouts"),
+      "@services": resolve(__dirname, "src/services"),
+      "@utils": resolve(__dirname, "src/utils"),
+      "@constants": resolve(__dirname, "src/constants"),
     },
   },
 });
