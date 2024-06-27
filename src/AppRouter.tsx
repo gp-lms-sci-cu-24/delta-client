@@ -29,6 +29,7 @@ import Announcement from "./features/Admin/announcement/Announcement";
 import SendAnnouncement from "./features/Admin/announcement/SendAnnouncement";
 import CourseClass from "./features/Admin/courseClass/CourseClass";
 import AddCourseClass from "./features/Admin/courseClass/AddCourseClass";
+import AdminDashboard from "./features/Admin/dashboard/AdminDashboard";
 
 export default function AppRoutes() {
   const [checkHealth, authHealth] = useAuthHealthMutation();
@@ -71,7 +72,7 @@ export default function AppRoutes() {
         </Route>
         <Route path="/app" element={<MainLayout />}>
           <Route index element={<Navigate to="dashboard" />} />
-          <Route path="dashboard" element={<p>test</p>} />
+          <Route path="admin/dashboard" element={<AdminDashboard/>} />
           <Route path="admin/courses" element={<Courses />} />
           <Route path="admin/courses/add" element={<AddCourse />} />
           <Route path="admin/courses/update/:code" element={<EditCourse />} />
