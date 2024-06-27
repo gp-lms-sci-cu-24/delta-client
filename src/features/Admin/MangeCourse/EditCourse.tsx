@@ -154,8 +154,8 @@ if(isLoading){
   return <Loading/>
 }
   return (
-    <Box sx={{ p: 2 }}>
-      <Header pageName={"Add Course"} message="" />
+    <Box sx={{ p: 1 }}>
+      <Header pageName={"Edit Course"} message="" />
       <Box
         component="form"
         sx={{

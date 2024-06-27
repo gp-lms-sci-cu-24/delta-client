@@ -9,9 +9,8 @@ import {
 import { LoginResponse } from "@features/auth/types";
 import { clearCredentials, setCredentials } from "@features/auth/authSlice";
 import { RootState } from "@app/root";
-
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.REACT_APP_API_URL,
+  baseUrl: import.meta.env.VITE_REACT_APP_API_URL,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const currentState = getState() as RootState;

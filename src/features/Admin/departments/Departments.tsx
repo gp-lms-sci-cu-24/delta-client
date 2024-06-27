@@ -85,7 +85,7 @@ export default function Departments() {
           title="Add Department"
           variant={"contained"}
           disableElevation
-          onClick={() => navigate("/app/admin/department/add")}
+          onClick={() => navigate("/app/admin/departments/add")}
           customSx={{ height: "40px", textTransform: "capitalize" }}
           disableRipple
           size="small"

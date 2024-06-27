@@ -48,7 +48,7 @@ export default function Courses() {
           title="Add course"
           variant={"contained"}
           disableElevation
-          onClick={() => navigate("/app/courses/add")}
+          onClick={() => navigate("/app/admin/courses/add")}
           customSx={{ height: "40px", textTransform: "capitalize" }}
           disableRipple
           size="small"

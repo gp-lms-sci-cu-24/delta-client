@@ -11,6 +11,7 @@ import {
   useTheme,
   Typography,
   MenuItem,
+  AppBar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CustomizedAppBar from "./AppBar";
@@ -55,7 +56,28 @@ export default function NavBar({ open, handleDrawerOpen }: INavBarProps) {
   };
 
   return (
-    <CustomizedAppBar position="fixed" open={open} elevation={0}>
+    <AppBar
+      position="fixed"
+      sx={{
+        zIndex: theme.zIndex.drawer + 1,
+        borderBottom: theme.palette.mode === "light" ? 1 : 0,
+        borderBottomColor: theme.palette.mode === "light" ? "#CECECE" : "",
+        backgroundColor: theme.palette.mode === "light" ? "#F5F5F5" : "black",
+        transition: theme.transitions.create(["width"], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        ...(open && {
+          marginLeft: NAVBAR_SETTING.drawerWidth,
+          width: `calc(100% - ${NAVBAR_SETTING.drawerWidth}px)`,
+          transition: theme.transitions.create(["width"], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        }),
+      }}
+      elevation={0}
+    >
       <Toolbar
         sx={{
           justifyContent: "space-between",
@@ -137,6 +159,6 @@ export default function NavBar({ open, handleDrawerOpen }: INavBarProps) {
       >
         <CircularProgress color="inherit" />
       </Backdrop> */}
-    </CustomizedAppBar>
+    </AppBar>
   );
 }

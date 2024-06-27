@@ -14,13 +14,7 @@ export default function MainLayout() {
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
-  const menu = [
-    {
-      name: "Dashboard",
-      path: "/app/dashboard",
-      icon: <LuLayoutDashboard size={22} />,
-    },
-  ];
+
 
   return (
     <Box>

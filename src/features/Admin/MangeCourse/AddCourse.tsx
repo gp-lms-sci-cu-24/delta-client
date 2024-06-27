@@ -129,7 +129,7 @@ console.log("departments",prerequisite)
   };
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 1 }}>
       <Header pageName={"Add Course"} message="" />
       <Box
         component="form"

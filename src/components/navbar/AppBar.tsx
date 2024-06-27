@@ -14,14 +14,14 @@ const CustomizedAppBar: React.FC<AppBarProps> = styled(MuiAppBar, {
   borderBottom: theme.palette.mode === "light" ? 1 : 0,
   borderBottomColor: theme.palette.mode === "light" ? "#CECECE" : "",
   backgroundColor: theme.palette.mode === "light" ? "#F5F5F5" : "black",
-  transition: theme.transitions.create(["width", "margin"], {
+  transition: theme.transitions.create(["width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: NAVBAR_SETTING.drawerWidth,
     width: `calc(100% - ${NAVBAR_SETTING.drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(["width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),

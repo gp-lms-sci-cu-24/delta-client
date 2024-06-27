@@ -28,7 +28,7 @@ function DepartmentCard({ name, image, info, code }: DepartmentCardProps) {
   };
 
   const handleOnUpdate = () => {
-    navigate(`/app/admin/department/update/${code}`);
+    navigate(`/app/admin/departments/update/${code}`);
   };
 
   return (

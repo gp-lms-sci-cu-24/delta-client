@@ -15,6 +15,16 @@ import EditCourse from "./features/Admin/MangeCourse/EditCourse";
 import Departments from "./features/Admin/departments/Departments";
 import AddDepartment from "./features/Admin/departments/AddDepartments";
 import UpdateDepartment from "./features/Admin/departments/UpdateDepartment";
+import AddLocation from "./features/Admin/location/AddLocation";
+import UpdateLocation from "./features/Admin/location/UpdateLocation";
+import Locations from "./features/Admin/location/Location";
+import AllStudent from "./features/Admin/student/AllStudent";
+import AddStudent from "./features/Admin/student/AddStudent";
+import AllProfessors from "./features/Admin/professor/AllProfessors";
+import AddProfessor from "./features/Admin/professor/AddProfessor";
+import Professor from "./features/Admin/professor/Professor";
+import EditProfessor from "./features/Admin/professor/EditProfessor";
+import UpdateStudent from "./features/Admin/student/UpdateStudent";
 
 export default function AppRoutes() {
   const [checkHealth, authHealth] = useAuthHealthMutation();
@@ -56,16 +66,36 @@ export default function AppRoutes() {
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
         </Route>
         <Route path="/app" element={<MainLayout />}>
-        <Route index element={<Navigate to="dashboard" />} />
-        <Route path="dashboard" element={<p>test</p>} />
-        <Route path="admin/courses" element={<Courses />} />
-            <Route path="admin/course/add" element={<AddCourse />} />
-            <Route path="admin/course/update/:code" element={<EditCourse />} />
-            <Route path="admin/departments" element={<Departments />} />
-            <Route path="admin/department/add" element={<AddDepartment />} />
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path="dashboard" element={<p>test</p>} />
+          <Route path="admin/courses" element={<Courses />} />
+          <Route path="admin/courses/add" element={<AddCourse />} />
+          <Route path="admin/courses/update/:code" element={<EditCourse />} />
+          <Route path="admin/departments" element={<Departments />} />
+          <Route path="admin/departments/add" element={<AddDepartment />} />
+          <Route
+            path="admin/departments/update/:code"
+            element={<UpdateDepartment />}
+          />
+           <Route path="admin/locations" element={<Locations />} />
+            <Route path="admin/locations/add" element={<AddLocation />} />
             <Route
-              path="admin/department/update/:code"
-              element={<UpdateDepartment />}
+              path="admin/locations/update/:id"
+              element={<UpdateLocation />}
+            />
+             <Route path="admin/students" element={<AllStudent />} />
+            <Route path="admin/students/add" element={<AddStudent />} />
+            <Route
+              path="admin/students/update/:studentCode"
+              element={<UpdateStudent />}
+            />
+            {/** professor */}
+            <Route path="admin/professors" element={<AllProfessors />} />
+            <Route path="admin/professors/add" element={<AddProfessor />} />
+            <Route path="admin/professors/:id" element={<Professor />} />
+            <Route
+              path="admin/professors/update/:userName"
+              element={<EditProfessor />}
             />
         </Route>
 
