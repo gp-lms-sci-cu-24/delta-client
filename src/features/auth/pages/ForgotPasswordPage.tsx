@@ -1,5 +1,6 @@
 import { Container, Grid, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import forgetPassword from "@assets/forgetPassword.png";
 // import FileUpload from "react-mui-fileuploader";
 
 function ForgotPasswordPage() {
@@ -10,7 +11,7 @@ function ForgotPasswordPage() {
       <Grid container>
         <Grid item xs={12} sm={12} md={6} lg={6} textAlign="center">
           <img
-            src="/src/features/auth/assets/forgetPassword.png"
+            src={forgetPassword}
             alt="forget password"
             style={{ maxWidth: "100%", height: "auto" }}
           />

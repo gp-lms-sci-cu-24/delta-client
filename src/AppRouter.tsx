@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import NotFound from "./components/NotFound";
-import { LoadingLayout, RequireNotAuth } from "./components/router";
-import { useAuthHealthMutation } from "./features/auth/authApiSlice";
+import NotFound from "@components/NotFound";
+import { LoadingLayout, RequireNotAuth } from "@components/router";
+import { useAuthHealthMutation } from "@features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
-import LocalStorageService from "./services/storage";
-import { setCredentials } from "./features/auth/authSlice";
-import SignInPage from "./features/auth/pages/SignInPage";
-import ForgotPasswordPage from "./features/auth/pages/ForgotPasswordPage";
+import LocalStorageService from "@services/storage";
+import { setCredentials } from "@features/auth/authSlice";
+import SignInPage from "@features/auth/pages/SignInPage";
+import ForgotPasswordPage from "@features/auth/pages/ForgotPasswordPage";
+import MainLayout from "@layouts/MainLayout";
 
 export default function AppRoutes() {
   const [checkHealth, authHealth] = useAuthHealthMutation();
@@ -19,14 +20,10 @@ export default function AppRoutes() {
     if (token) {
       dispatch(setCredentials(token));
     }
-    console.log("Checking health");
-    console.log(token);
 
     checkHealth();
     setLoading(false);
   }, []);
-
-  console.log(authHealth);
 
   return (
     <Routes>
@@ -51,6 +48,9 @@ export default function AppRoutes() {
           <Route index element={<Navigate to="login" />} />
           <Route path="login" element={<SignInPage />} />
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
+        </Route>
+        <Route path="/app" element={<MainLayout />}>
+          <Route index element={<div>APPP</div>} />
         </Route>
 
         {/** 404 page */}
