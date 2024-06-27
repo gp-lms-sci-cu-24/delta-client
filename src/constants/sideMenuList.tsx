@@ -116,44 +116,44 @@ export const ProfessorsMenu = [
 export const AdminMenu = [
   {
     name: "Dashboard",
-    path: "/app/dashboard",
+    path: "/app/admin/dashboard",
     icon: <LuLayoutDashboard size={22} />,
   },
   {
     name: "Locations",
-    path: "/app/locations",
+    path: "/app/admin/locations",
     icon: <GrMapLocation size={22} />,
   },
   {
     name: "Announcement",
-    path: "/app/announcement",
+    path: "/app/admin/announcement",
     icon: <NotificationsIcon />,
   },
 
   {
     name: "Departments",
-    path: "/app/departments",
+    path: "/app/admin/departments",
     icon: <BsBuildings size={22} />,
   },
   {
     name: "Students",
-    path: "/app/students",
+    path: "/app/admin/students",
     icon: <PiStudentBold size={22} />,
   },
   {
     name: "Courses",
-    path: "/app/courses",
+    path: "/app/admin/courses",
     icon: <FaGraduationCap size={22} />,
   },
 
   {
     name: "Course class",
-    path: "/app/classes",
+    path: "/app/admin/classes",
     icon: <AnalyticsIcon />,
   },
   {
     name: "Professor",
-    path: "/app/professors",
+    path: "/app/admin/professors",
     icon: <GiTeacher size={22} />,
   },
 ];

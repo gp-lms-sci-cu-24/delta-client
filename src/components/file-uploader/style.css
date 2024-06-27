@@ -1,0 +1,32 @@
+.upload__image-wrapper{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.upload__image-upload-area{
+    background-color:#4d9bff ;
+    width: 100%;
+    color:white;
+    height: 100%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 84px;
+    
+}
+.upload__image-btn{
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+.upload__image-image-name{
+    font-weight: bolder;
+    text-wrap: nowrap;
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 50px;
+}

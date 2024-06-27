@@ -1,3 +1,4 @@
+import { AdminMenu } from "@/constants/sideMenuList";
 import NavBar from "@components/navbar";
 import SideBar from "@components/sidebar";
 import Box from "@mui/material/Box";
@@ -9,7 +10,7 @@ import { Outlet } from "react-router-dom";
 export interface IMainLayoutProps {}
 
 export default function MainLayout() {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
@@ -24,7 +25,7 @@ export default function MainLayout() {
   return (
     <Box>
       <NavBar open={open} handleDrawerOpen={handleDrawerOpen} />
-      <SideBar open={open} handleDrawerClose={handleDrawerClose} menu={menu} />
+      <SideBar open={open} handleDrawerClose={handleDrawerClose} menu={AdminMenu} />
       <Main open={open} sx={{ ml: "50px", height: "100vh" }}>
         <DrawerHeader />
         <Outlet />
@@ -37,8 +38,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
   open?: boolean;
 }>(({ theme, open }) => ({
   flexGrow: 1,
-  paddingLeft: theme.spacing(3),
-  paddingRight: theme.spacing(3),
+  paddingLeft: theme.spacing(2),
 
   transition: theme.transitions.create("margin", {
     easing: theme.transitions.easing.sharp,

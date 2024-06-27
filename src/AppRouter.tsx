@@ -9,6 +9,12 @@ import { setCredentials } from "@features/auth/authSlice";
 import SignInPage from "@features/auth/pages/SignInPage";
 import ForgotPasswordPage from "@features/auth/pages/ForgotPasswordPage";
 import MainLayout from "@layouts/MainLayout";
+import AddCourse from "./features/Admin/MangeCourse/AddCourse";
+import Courses from "./features/Admin/MangeCourse/Courses";
+import EditCourse from "./features/Admin/MangeCourse/EditCourse";
+import Departments from "./features/Admin/departments/Departments";
+import AddDepartment from "./features/Admin/departments/AddDepartments";
+import UpdateDepartment from "./features/Admin/departments/UpdateDepartment";
 
 export default function AppRoutes() {
   const [checkHealth, authHealth] = useAuthHealthMutation();
@@ -50,7 +56,17 @@ export default function AppRoutes() {
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
         </Route>
         <Route path="/app" element={<MainLayout />}>
-          <Route index element={<div>APPP</div>} />
+        <Route index element={<Navigate to="dashboard" />} />
+        <Route path="dashboard" element={<p>test</p>} />
+        <Route path="admin/courses" element={<Courses />} />
+            <Route path="admin/course/add" element={<AddCourse />} />
+            <Route path="admin/course/update/:code" element={<EditCourse />} />
+            <Route path="admin/departments" element={<Departments />} />
+            <Route path="admin/department/add" element={<AddDepartment />} />
+            <Route
+              path="admin/department/update/:code"
+              element={<UpdateDepartment />}
+            />
         </Route>
 
         {/** 404 page */}
