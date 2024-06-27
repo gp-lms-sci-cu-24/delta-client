@@ -25,6 +25,10 @@ import AddProfessor from "./features/Admin/professor/AddProfessor";
 import Professor from "./features/Admin/professor/Professor";
 import EditProfessor from "./features/Admin/professor/EditProfessor";
 import UpdateStudent from "./features/Admin/student/UpdateStudent";
+import Announcement from "./features/Admin/announcement/Announcement";
+import SendAnnouncement from "./features/Admin/announcement/SendAnnouncement";
+import CourseClass from "./features/Admin/courseClass/CourseClass";
+import AddCourseClass from "./features/Admin/courseClass/AddCourseClass";
 
 export default function AppRoutes() {
   const [checkHealth, authHealth] = useAuthHealthMutation();
@@ -97,6 +101,10 @@ export default function AppRoutes() {
               path="admin/professors/update/:userName"
               element={<EditProfessor />}
             />
+             <Route path="admin/announcements" element={<Announcement />} />
+            <Route path="admin/announcements/add" element={<SendAnnouncement />} />
+            <Route path="admin/classes" element={<CourseClass />} />
+            <Route path="admin/classes/add" element={<AddCourseClass />} />
         </Route>
 
         {/** 404 page */}

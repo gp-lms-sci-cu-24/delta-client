@@ -28,7 +28,7 @@ function AllStudent() {
     navigate("/app/admin/student-info", { state: { code: id } });
   };
   return (
-    <Box sx={{ width: "100%", p: 1, height: "100vh" }}>
+    <Box sx={{ p: 1, height: "100vh" }}>
       <Stack
         direction="row"
         spacing={2}

@@ -126,7 +126,7 @@ export const AdminMenu = [
   },
   {
     name: "Announcement",
-    path: "/app/admin/announcement",
+    path: "/app/admin/announcements",
     icon: <NotificationsIcon />,
   },
 

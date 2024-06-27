@@ -52,13 +52,13 @@ export default function Professor() {
         .unwrap()
         .then((res) => {
           setIsAcadmic(true);
-          enqueueSnackbar(`${user.username} is now acadmic advisor`, {
+          enqueueSnackbar(`${user.username} is now academic advisor`, {
             variant: "success",
           });
           console.log("ressss", res);
         })
         .catch((e) => {
-          enqueueSnackbar(`failed to make ${user.username} acadmic advisor`, {
+          enqueueSnackbar(`failed to make ${user.username} academic advisor`, {
             variant: "error",
           });
           console.log("error", e);
@@ -68,7 +68,7 @@ export default function Professor() {
         .unwrap()
         .then((res) => {
           setIsAcadmic(true);
-          enqueueSnackbar(`${user.username} isn't acadmic advisor no more`, {
+          enqueueSnackbar(`${user.username} isn't academic advisor no more`, {
             variant: "success",
           });
           console.log("ressss", res);
@@ -107,7 +107,7 @@ export default function Professor() {
       })
       .catch(() => {
         enqueueSnackbar(
-          `failed to make ${data?.username} acadmic advisor for ${userName}`,
+          `failed to make ${data?.username} academic advisor for ${userName}`,
           {
             variant: "error",
           }

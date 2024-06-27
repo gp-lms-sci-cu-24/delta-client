@@ -27,7 +27,7 @@ function AllProfessors() {
   };
   console.log(Data);
   return (
-    <Box sx={{ p: 1, width: "100%", height: "100vh" }}>
+    <Box sx={{ p: 1, height: "100vh" }}>
       <Stack
         direction="row"
         spacing={2}
