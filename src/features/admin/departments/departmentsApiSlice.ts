@@ -8,10 +8,9 @@ import {
 
 const departmentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllDepartment: builder.query<Page<Department>, PageQuery>({
-      query: (page) => ({
+    getAllDepartment: builder.query<Department[],void>({
+      query: () => ({
         url: "/v1/departments",
-        params: page,
         method: "GET",
       }),
       providesTags: ["Department"],

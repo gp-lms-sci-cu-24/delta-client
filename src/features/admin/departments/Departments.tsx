@@ -17,13 +17,8 @@ import { Department } from "./types";
 export default function Departments() {
   const navigate = useNavigate();
   const [page, setPage] = useState<number>(1);
-  const { data, isLoading } = useGetAllDepartmentQuery({
-    pageNo: page - 1,
-    pageSize: 20,
-  });
-  const departmentsData = data?.content || [];
-  const totalPages = data?.totalPages || 0;
-  console.log("departmentsData", departmentsData);
+  const { data, isLoading } = useGetAllDepartmentQuery();
+  const departmentsData = data || [];
   const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
@@ -125,16 +120,6 @@ export default function Departments() {
         )}
       </Grid>
       <Box sx={{flex:1}}/>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Pagination
-          page={page}
-          onChange={handleChange}
-          count={totalPages}
-          boundaryCount={2}
-          color="primary"
-          hidden={departmentsData.length === 0}
-        />
-      </Box>
     </Box>
   );
 }
