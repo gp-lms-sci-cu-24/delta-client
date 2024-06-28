@@ -26,14 +26,10 @@ function AllProfessors() {
     navigate(`/app/admin/professors/${id}`, { state: { code: id } });
   };
   console.log(Data);
+
   return (
     <Box sx={{ p: 1, height: "100vh" }}>
-      <Stack
-        direction="row"
-        spacing={2}
-        justifyContent={"space-between"}
-        mb={2}
-      >
+      <Stack direction="row" spacing={2} justifyContent={"space-between"} mb={2}>
         <Header pageName={"All Professors"} message="" />
         <CustomButton
           title="Add professor"
@@ -46,7 +42,7 @@ function AllProfessors() {
         />
       </Stack>
       <DataGrid
-        rows={Data}
+        rows={Data.map((e) => ({ id: e.username, ...e }))}
         columns={ProfessorColumns}
         checkboxSelection={false}
         loading={isLoading}
