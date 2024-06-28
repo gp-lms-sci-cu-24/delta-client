@@ -49,6 +49,7 @@ import ProfessorDashboard from "./features/professor/dashboard/ProfessorDashboar
 export default function AppRoutes() {
   const [checkHealth, authHealth] = useAuthHealthMutation();
   const [userRole, setUserRole] = useState<string>("");
+  const [dashboard, setDashboard] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUserPayload);
@@ -61,8 +62,13 @@ export default function AppRoutes() {
     if (currentUser) {
       if (currentUser.roles.includes(Role.ADMIN)) {
         setUserRole(Role.ADMIN);
+        setDashboard("/app/admin/dashboard");
       } else if (currentUser.roles.includes(Role.STUDENT)) {
         setUserRole(Role.STUDENT);
+        setDashboard("/app/student/dashboard");
+      } else if (currentUser.roles.includes(Role.PROFESSOR)) {
+        setUserRole(Role.PROFESSOR);
+        setDashboard("/app/professor/dashboard");
       }
     }
     checkHealth();
@@ -156,9 +162,9 @@ export default function AppRoutes() {
                 element={<Announcement />}
               />
               <Route
-              path="student/profile/update/:studentCode"
-              element={<UpdateStudent />}
-            />
+                path="student/profile/update/:studentCode"
+                element={<UpdateStudent />}
+              />
               <Route path="student/profile" element={<Profile />} />
             </Route>
             {/** professor role based stack */}
@@ -176,13 +182,12 @@ export default function AppRoutes() {
                 path="professor/dashboard"
                 element={<ProfessorDashboard />}
               />
-               <Route path="professor/courses" element={<StudentCourse />} />
-                <Route
-              path="professor/profile/update/:userName"
-              element={<EditProfessor />}
-            />
-                        <Route path="professor/viewschedule" element={<ViewSchedule />} />
-
+              <Route path="professor/courses" element={<StudentCourse />} />
+              <Route
+                path="professor/profile/update/:userName"
+                element={<EditProfessor />}
+              />
+              <Route path="professor/viewschedule" element={<ViewSchedule />} />
             </Route>
 
             {/** Admin  role based stack */}
