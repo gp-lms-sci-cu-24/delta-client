@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import StudentInfoCard from "./components/StudentInfoCard";
 import Loading from "@/components/Loading";
 import CurrentTable from "@/features/Student/course registration/components/CurrentTable";
-import { useGetStudentByIdQuery } from "@/features/Admin/student/studentApiSlice";
+import { useGetStudentByIdQuery } from "@features/admin/student/studentApiSlice";
 interface Props {
   id?: string;
 }

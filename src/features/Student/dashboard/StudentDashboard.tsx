@@ -1,4 +1,4 @@
-import { Level, StudentDto } from "@/features/Admin/student/type";
+import { Level, StudentDto } from "@features/admin/student/type";
 import { useUserStateQuery } from "@/features/auth/authApiSlice";
 import { useResponsiveStack } from "@/services/responsive";
 import { Box, Typography, useTheme, Grid } from "@mui/material";
@@ -6,7 +6,7 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import StudentSammary from "./studentComponents/StudentSummary";
 import { useEffect, useState } from "react";
 import LoadingSkeletonGrids from "./studentComponents/LoadingSkeletonGrids";
-import { getReadableLeveL } from "@/features/Admin/student/utils";
+import { getReadableLeveL } from "@features/admin/student/utils";
 import PaymentInformation from "./studentComponents/PaymentInformation";
 import { PaymentInformationData } from "./data/StudentDashboard";
 import Agenda from "./studentComponents/Agenda";

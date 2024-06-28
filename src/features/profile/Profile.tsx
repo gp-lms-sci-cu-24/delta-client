@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation, useUserStateQuery } from "../auth/authApiSlice";
 import { clearCredentials, selectCurrentUserPayload } from "../auth/authSlice";
 import { Role } from "../auth/types";
-import { StudentDto } from "../Admin/student/type";
-import { Professor } from "../Admin/professor/types";
+import { StudentDto } from "@features/admin/student/type";
+import { Professor } from "@features/admin/professor/types";
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
 

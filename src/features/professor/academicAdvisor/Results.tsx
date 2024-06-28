@@ -2,11 +2,11 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import StudentInfoCard from "./components/StudentInfoCard";
 import { useUserStateQuery } from "@/features/auth/authApiSlice";
-import { useGetStudentByIdQuery } from "@/features/Admin/student/studentApiSlice";
+import { useGetStudentByIdQuery } from "@features/admin/student/studentApiSlice";
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
 import { columnsLevel, rowsLevelOne } from "./Levels";
-import { StudentDto } from "@/features/Admin/student/type";
+import { StudentDto } from "@features/admin/student/type";
 
 interface Props {
   id?: string;

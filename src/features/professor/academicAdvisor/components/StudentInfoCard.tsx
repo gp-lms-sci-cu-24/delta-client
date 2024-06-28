@@ -1,5 +1,5 @@
-import { Department } from "@/features/Admin/departments/types";
-import { Gender, Level } from "@/features/Admin/student/type";
+import { Department } from "@features/admin/departments/types";
+import { Gender, Level } from "@features/admin/student/type";
 import { Grid, Avatar, Typography } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 

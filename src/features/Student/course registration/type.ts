@@ -1,4 +1,4 @@
-import { YearSemester } from "@/features/Admin/courseClass/type";
+import { YearSemester } from "@features/admin/courseClass/type";
 
 export interface RegisterCourseQuery {
   courseCode: string;

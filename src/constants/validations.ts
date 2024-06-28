@@ -1,4 +1,4 @@
-import { Gender } from "@/features/Admin/student/type";
+import { Gender } from "@features/admin/student/type";
 import { PASSWORD_LOGIN_MAX_LENGTH, PASSWORD_LOGIN_MIN_LENGTH, USERNAME_LOGIN_MAX_LENGTH, USERNAME_LOGIN_MIN_LENGTH } from "@/features/auth/constants";
 import { RegisterOptions } from 'react-hook-form';
 

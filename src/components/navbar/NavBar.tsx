@@ -20,8 +20,8 @@ import { clearCredentials, selectCurrentUserPayload } from "@/features/auth/auth
 import { useLogoutMutation, useUserStateQuery } from "@/features/auth/authApiSlice";
 import { useSelector } from "react-redux";
 import { Role } from "@/features/auth/types";
-import { StudentDto } from "@/features/Admin/student/type";
-import { Professor } from "@/features/Admin/professor/types";
+import { StudentDto } from "@features/admin/student/type";
+import { Professor } from "@features/admin/professor/types";
 
 export interface INavBarProps {
   open?: boolean;
