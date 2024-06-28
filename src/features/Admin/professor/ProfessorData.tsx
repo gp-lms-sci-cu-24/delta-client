@@ -94,7 +94,7 @@ const ProfessorColumns: GridColDef[] = [
     headerAlign: "left",
     renderCell: ({ row: { firstName, lastName } }) => {
       return (
-        <Typography variant="subtitle2">
+        <Typography display="flex" alignItems="center" height="100%" variant="subtitle2">
           {firstName + " " + lastName}
         </Typography>
       );
@@ -134,7 +134,7 @@ const ProfessorColumns: GridColDef[] = [
     sortable: false,
     renderCell: ({ row: { roles } }) => {
       console.log("role", roles);
-      return <Typography variant="subtitle2">{roles.toString()}</Typography>;
+      return <Typography display="flex" alignItems="center" height="100%" variant="subtitle2">{roles.toString()}</Typography>;
     },
   },
   {

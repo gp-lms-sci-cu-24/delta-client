@@ -21,9 +21,9 @@ import FileUpload from "@/components/file-uploader";
 
 function UpdateDepartment() {
   // ---- hooks -------
-  const { departmentCode } = useParams();
+  const { code } = useParams();
   const [image, setImage] = useState<ImageListType>([]);
-  const departmentQuery = useGetDepartmentQuery(departmentCode || "__");
+  const departmentQuery = useGetDepartmentQuery(code || "__");
   const { isSmallDown } = useResponsiveStack();
   const [updateDepartment, { isLoading }] = useUpdateDepartmentMutation();
   const [uploadDepartmentImage, uploadImageState] =
@@ -51,7 +51,7 @@ function UpdateDepartment() {
     setValue("code", departmentQuery.data?.code ?? "");
   }, [departmentQuery.data, setValue]);
 
-  if (!departmentCode || departmentQuery.isError) {
+  if (!code || departmentQuery.isError) {
     return <NotFound home="/app" />;
   }
 
@@ -62,7 +62,7 @@ function UpdateDepartment() {
   const onSubmit = async (data: Department) => {
     try {
       const department = await updateDepartment({
-        code: departmentCode,
+        code: code,
         data,
       }).unwrap();
 

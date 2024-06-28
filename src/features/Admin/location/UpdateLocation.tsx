@@ -18,17 +18,18 @@ import Header from "@/components/Header";
 import { InputField } from "@/components/inputs/InputField";
 import { useResponsiveStack } from "@/services/responsive";
 import FileUpload from "@/components/file-uploader";
+import { error } from "console";
 
 function UpdateLocation() {
-  const { locationid } = useParams();
+  const { id } = useParams();
   const [image, setImage] = useState<ImageListType>([]);
-  const locationQuery = useGetLocationQuery(Number(locationid) || 0);
+  const locationQuery = useGetLocationQuery(Number(id) || 0);
   const [updateLocation, { isLoading }] = useUpdateLocationMutation();
   const [uploadLocationImage, uploadImageState] =
     useUploadLocationImageMutation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { isSmallDown } = useResponsiveStack();
-
+console.log("locationid", id);
   const {
     register,
     handleSubmit,
@@ -54,7 +55,7 @@ function UpdateLocation() {
   const onSubmit = async (data: LocationDto) => {
     try {
       const location = await updateLocation({
-        id: Number(locationid),
+        id: Number(id),
         data,
       }).unwrap();
 
@@ -103,7 +104,7 @@ function UpdateLocation() {
       closeSnackbar("uploading-image-toast");
     }
   };
-  if (!locationid || locationQuery.isError) {
+  if (!id || locationQuery.isError) {
     return <NotFound home="/app" />;
   }
   if (locationQuery.isLoading) {

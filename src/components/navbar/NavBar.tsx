@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Box,
@@ -14,8 +14,14 @@ import {
   AppBar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import CustomizedAppBar from "./AppBar";
 import NAVBAR_SETTING from "@/constants/navbarSetting";
+import { useDispatch } from "react-redux";
+import { clearCredentials, selectCurrentUserPayload } from "@/features/auth/authSlice";
+import { useLogoutMutation, useUserStateQuery } from "@/features/auth/authApiSlice";
+import { useSelector } from "react-redux";
+import { Role } from "@/features/auth/types";
+import { StudentDto } from "@/features/Admin/student/type";
+import { Professor } from "@/features/Admin/professor/types";
 
 export interface INavBarProps {
   open?: boolean;
@@ -24,8 +30,29 @@ export interface INavBarProps {
 
 export default function NavBar({ open, handleDrawerOpen }: INavBarProps) {
   const theme = useTheme();
-
+const dispatch = useDispatch();
+const [ logout]=useLogoutMutation();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const [image, setImage] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>("");
+  const { data } = useUserStateQuery();
+  const currentUser = useSelector(selectCurrentUserPayload);
+
+  useEffect(() => {
+    if (currentUser?.roles.includes(Role.STUDENT)) {
+      const student = data as StudentDto;
+      if (data) {
+        setUserName(student.username);
+        setImage(student.profilePicture);
+      }
+    } else {
+      const professor = data as Professor;
+      if (data) {
+        setImage(professor.profilePicture);
+        setUserName(professor.username);
+      }
+    }
+  }, [data]);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -45,8 +72,8 @@ export default function NavBar({ open, handleDrawerOpen }: INavBarProps) {
       case "Logout":
         // setLoading(true);
         // document.body.classList.add("no-scroll");
-        // dispatch(clearCredentials());
-        // logout();
+       dispatch(clearCredentials());
+         logout();
         // setLoading(false);
         break;
       default:
@@ -111,7 +138,7 @@ export default function NavBar({ open, handleDrawerOpen }: INavBarProps) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar />
+              <Avatar alt={userName} src={image ?? ""} />
               </IconButton>
             </Tooltip>
             <Menu

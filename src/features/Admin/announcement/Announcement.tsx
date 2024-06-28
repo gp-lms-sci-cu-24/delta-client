@@ -18,8 +18,18 @@ function Announcement() {
     pageSize: 10,
   });
   const currentUser = useSelector(selectCurrentUserPayload);
-
   const navigate = useNavigate();
+
+const handleNavigate = () => {
+  if (currentUser) {
+   if (currentUser.roles.includes(Role.PROFESSOR)) {
+      navigate("/app/professor/announcements/add")
+   }
+   else if (currentUser.roles.includes(Role.ADMIN)) {
+      navigate("/app/admin/announcements/add")
+   }
+  }
+}
   const { isSmallDown } = useResponsiveStack();
   const { data, isLoading, isFetching } =
     useGetAllAnnouncementsQuery(paginationModel);
@@ -31,7 +41,7 @@ function Announcement() {
         <Header pageName={"Announcements"} message="" />
         {!currentUser?.roles.includes(Role.STUDENT) && (
           <CustomButton
-            onClick={() => navigate("/app/admin/announcements/add")}
+            onClick={handleNavigate}
             variant="contained"
             customSx={{
               height: isSmallDown ? "30px" : "40px",

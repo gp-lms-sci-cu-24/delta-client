@@ -1,25 +1,46 @@
-import { AdminMenu } from "@/constants/sideMenuList";
+import { SideMenuItem } from "@/components/sidebar/types";
+import { AdminMenu, ProfessorsMenu, StudentMenu } from "@/constants/sideMenuList";
+import { selectCurrentUserPayload } from "@/features/auth/authSlice";
+import { Role } from "@/features/auth/types";
 import NavBar from "@components/navbar";
 import SideBar from "@components/sidebar";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
-import { LuLayoutDashboard } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 
 export interface IMainLayoutProps {}
 
 export default function MainLayout() {
   const [open, setOpen] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState<string>("");
+  const [menuRoleBased, setMenuRoleBased] = useState<SideMenuItem[] | undefined>([]);
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
+  const currentUser = useSelector(selectCurrentUserPayload);
+  console.log("ssss", currentUser?.roles);
 
+useEffect(() => {
+  if (currentUser) {
+    if (currentUser.roles.includes(Role.ADMIN)) {
+      setUserRole(Role.ADMIN);
+      setMenuRoleBased(AdminMenu);
+    } else if (currentUser.roles.includes(Role.STUDENT)) {
+      setUserRole(Role.STUDENT);
+      setMenuRoleBased(StudentMenu);
+    }
+    else if (currentUser.roles.includes(Role.PROFESSOR)) {
+      setUserRole(Role.PROFESSOR);
+      setMenuRoleBased(ProfessorsMenu);
+    }
 
-
+  }
+}, [currentUser]);
   return (
     <Box>
       <NavBar open={open} handleDrawerOpen={handleDrawerOpen} />
-      <SideBar open={open} handleDrawerClose={handleDrawerClose} menu={AdminMenu} />
+      <SideBar open={open} handleDrawerClose={handleDrawerClose} menu={menuRoleBased} />
       <Main open={open} sx={{ ml: "50px", height: "100vh" }}>
         <DrawerHeader />
         <Outlet />

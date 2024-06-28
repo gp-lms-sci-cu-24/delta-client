@@ -98,7 +98,7 @@ const StudentColumns: GridColDef[] = [
       row: { firstName, lastname, fatherName, grandfatherName },
     }) => {
       return (
-        <Typography variant="subtitle2">
+        <Typography display="flex" alignItems="center" height="100%" variant="subtitle2">
           {firstName +
             " " +
             fatherName +
@@ -119,7 +119,7 @@ const StudentColumns: GridColDef[] = [
     headerAlign: "left",
     renderCell: ({ row: { level } }) => {
       return (
-        <Typography variant="subtitle2">{level.replace(/_/g, " ")}</Typography>
+        <Typography display="flex" alignItems="center" height="100%" variant="subtitle2">{level.replace(/_/g, " ")}</Typography>
       );
     },
   },
@@ -166,7 +166,7 @@ const StudentColumns: GridColDef[] = [
     width: 120,
     disableColumnMenu: true,
     renderCell: ({ row: { department } }) => {
-      return <Typography variant="subtitle2">{department?.code}</Typography>;
+      return <Typography display="flex" alignItems="center" height="100%" variant="subtitle2">{department?.code}</Typography>;
     },
   },
   {

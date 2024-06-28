@@ -11,6 +11,7 @@ import {
 import { AssignedProfessor, AssignedStudent } from "../AssignData";
 import Loading from "@/components/Loading";
 import { EmptyDataGrid } from "@/components/empty/EmptyDataGrid";
+import { Professor } from "../types";
 
 interface dataprops {
   username?: string;
@@ -43,7 +44,7 @@ export default function AssigendUsers(profname: dataprops) {
   console.log("studentsData", studentsData);
   const handleCellDoubleClickStudent = (params: GridCellParams) => {
     const id = params.row.username;
-    navigate("/app/student-info", { state: { code: id } });
+    navigate("/app/admin/students/student-info", { state: { code: id } });
   };
 
   // professors assigned
@@ -63,7 +64,7 @@ export default function AssigendUsers(profname: dataprops) {
 
   const handleCellDoubleClickProfessor = (params: GridCellParams) => {
     const id = params.row.username;
-    navigate(`/app/professors/${id}`, { state: { code: id } });
+    navigate(`/app/admin/professors/${id}`, { state: { code: id } });
   };
 
   if (ProfessorsLoading || studentsLoading) return <Loading></Loading>;
@@ -112,7 +113,7 @@ export default function AssigendUsers(profname: dataprops) {
                   },
                 height: "100vh",
               }}
-              onCellDoubleClick={handleCellDoubleClickStudent}
+              //onCellDoubleClick={handleCellDoubleClickStudent}
             />
           )}
 

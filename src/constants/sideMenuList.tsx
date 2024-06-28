@@ -14,38 +14,38 @@ import BookIcon from "@mui/icons-material/Book";
 export const StudentMenu = [
   {
     name: "Dashboard",
-    path: "/app/dashboard",
+    path: "/app/student/dashboard",
     icon: <LuLayoutDashboard size={22} />,
   },
   {
     name: "Profile",
-    path: "/app/profile",
+    path: "/app/student/profile",
     icon: <PiUserCircleFill size={28} />,
   },
 
   {
     name: "Schedule",
-    path: "/app/viewschedule",
+    path: "/app/student/viewschedule",
     icon: <CalendarTodayIcon />,
   },
   {
     name: "Courses",
-    path: "/app/courses-basic",
+    path: "/app/student/courses",
     icon: <BookIcon />,
   },
   {
     name: "Announcement",
-    path: "/app/announcement",
+    path: "/app/student/announcements",
     icon: <NotificationsIcon />,
   },
   {
     name: "Registration",
-    path: "/app/course-registration",
+    path: "/app/student/course-registration",
     icon: <TableViewIcon />,
   },
   {
     name: "Results",
-    path: "/app/results",
+    path: "/app/student/results",
     icon: <AnalyticsIcon />,
   },
 ];
@@ -69,7 +69,7 @@ export const AcademicMenu = [
   },
   {
     name: "Announcement",
-    path: "/app/announcement",
+    path: "/app/announcements",
     icon: <NotificationsIcon />,
   },
   {
@@ -88,29 +88,28 @@ export const AcademicMenu = [
 export const ProfessorsMenu = [
   {
     name: "Dashboard",
-    path: "/app/dashboard",
+    path: "/app/professor/dashboard",
     icon: <LuLayoutDashboard size={22} />,
   },
   {
     name: "Profile",
-    path: "/app/profile",
+    path: "/app/professor/profile",
     icon: <PiUserCircleFill size={22} />,
   },
-
   {
     name: "Schedule",
-    path: "/app/viewschedule",
+    path: "/app/professor/viewschedule",
     icon: <TableViewIcon />,
   },
   {
     name: "Announcement",
-    path: "/app/announcement",
+    path: "/app/professor/announcements",
     icon: <NotificationsIcon />,
   },
   {
-    name: "Charts",
-    path: "/app/charts",
-    icon: <AnalyticsIcon />,
+    name: "Courses",
+    path: "/app/professor/courses",
+    icon: <BookIcon />,
   },
 ];
 export const AdminMenu = [

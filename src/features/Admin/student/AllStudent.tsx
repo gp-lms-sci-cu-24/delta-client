@@ -25,7 +25,7 @@ function AllStudent() {
   const handleCellDoubleClick = (params: GridCellParams) => {
     const id = params.row.username;
     console.log("id", params.row.username);
-    navigate("/app/admin/student-info", { state: { code: id } });
+    navigate("/app/admin/students/student-info", { state: { code: id } });
   };
   return (
     <Box sx={{ p: 1, height: "100vh" }}>

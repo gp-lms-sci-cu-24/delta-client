@@ -1,4 +1,4 @@
-import { CircularProgress, IconButton, Typography } from "@mui/material";
+import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -56,19 +56,27 @@ const AssignedStudent: GridColDef[] = [
     width: 280,
     align: "left",
     headerAlign: "left",
+
     renderCell: ({
       row: { firstName, lastname, fatherName, grandfatherName },
     }) => {
       return (
-        <Typography variant="subtitle2">
-          {firstName +
-            " " +
-            fatherName +
-            " " +
-            grandfatherName +
-            " " +
-            lastname}
-        </Typography>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+        >
+          <Typography variant="subtitle2">
+            {firstName +
+              " " +
+              fatherName +
+              " " +
+              grandfatherName +
+              " " +
+              lastname}
+          </Typography>
+        </Box>
       );
     },
   },
@@ -81,7 +89,11 @@ const AssignedStudent: GridColDef[] = [
     headerAlign: "left",
     renderCell: ({ row: { level } }) => {
       return (
-        <Typography variant="subtitle2">{level.replace(/_/g, " ")}</Typography>
+        <Box display="flex" alignItems="center" height="100%">
+          <Typography variant="subtitle2">
+            {level.replace(/_/g, " ")}
+          </Typography>
+        </Box>
       );
     },
   },
@@ -128,7 +140,11 @@ const AssignedStudent: GridColDef[] = [
     width: 120,
     disableColumnMenu: true,
     renderCell: ({ row: { department } }) => {
-      return <Typography variant="subtitle2">{department?.code}</Typography>;
+      return (
+       <Box display="flex" alignItems="center" height="100%">
+        <Typography variant="subtitle2">{department?.code}</Typography>
+      </Box>
+      );
     },
   },
 
@@ -141,7 +157,7 @@ const AssignedStudent: GridColDef[] = [
     width: 120,
     disableColumnMenu: true,
     renderCell: ({ row: { academicAdvisor } }) => {
-      return <Typography variant="subtitle2">{academicAdvisor}</Typography>;
+      return <Typography display="flex" alignItems="center" height="100%" variant="subtitle2">{academicAdvisor}</Typography>;
     },
   },
   {
@@ -182,7 +198,8 @@ const AssignedProfessor: GridColDef[] = [
     headerAlign: "left",
     renderCell: ({ row: { firstName, lastName } }) => {
       return (
-        <Typography variant="subtitle2">
+
+        <Typography display="flex" alignItems="center" height="100%" variant="subtitle2">
           {firstName + " " + lastName}
         </Typography>
       );
@@ -222,7 +239,7 @@ const AssignedProfessor: GridColDef[] = [
     sortable: false,
     renderCell: ({ row: { roles } }) => {
       console.log("role", roles);
-      return <Typography variant="subtitle2">{roles.toString()}</Typography>;
+      return <Typography display="flex" alignItems="center" height="100%" variant="subtitle2">{roles.toString()}</Typography>;
     },
   },
   {
@@ -234,7 +251,7 @@ const AssignedProfessor: GridColDef[] = [
     width: 120,
     disableColumnMenu: true,
     renderCell: ({ row: { supervisor } }) => {
-      return <Typography variant="subtitle2">{supervisor}</Typography>;
+      return <Typography  display="flex" alignItems="center" height="100%" variant="subtitle2">{supervisor}</Typography>;
     },
   },
   {

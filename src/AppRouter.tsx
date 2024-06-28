@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "@components/NotFound";
-import { LoadingLayout, RequireNotAuth } from "@components/router";
+import { LoadingLayout, RequireAuth, RequireNotAuth } from "@components/router";
 import { useAuthHealthMutation } from "@features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import LocalStorageService from "@services/storage";
-import { setCredentials } from "@features/auth/authSlice";
+import {
+  selectCurrentUserPayload,
+  setCredentials,
+} from "@features/auth/authSlice";
 import SignInPage from "@features/auth/pages/SignInPage";
 import ForgotPasswordPage from "@features/auth/pages/ForgotPasswordPage";
 import MainLayout from "@layouts/MainLayout";
@@ -30,18 +33,38 @@ import SendAnnouncement from "./features/Admin/announcement/SendAnnouncement";
 import CourseClass from "./features/Admin/courseClass/CourseClass";
 import AddCourseClass from "./features/Admin/courseClass/AddCourseClass";
 import AdminDashboard from "./features/Admin/dashboard/AdminDashboard";
+import StudentDashboard from "./features/Student/dashboard/StudentDashboard";
+import { useSelector } from "react-redux";
+import { Role } from "./features/auth/types";
+import Profile from "./features/profile/Profile";
+import AllTables from "./features/Student/schedule/AllTables";
+import ViewSchedule from "./features/Student/schedule/ViewSchedule";
+import StudentCourse from "./features/Student/courses/StudentCourse";
+import CourseRegistration from "./features/Student/course registration/CourseRegistration";
+import Results from "./features/professor/academicAdvisor/Results";
+import StudentAcdemicRecord from "./features/professor/academicAdvisor/StudentAcdemicRecord";
+import ACStudents from "./features/professor/academicAdvisor/ACStudents";
+import ProfessorDashboard from "./features/professor/dashboard/ProfessorDashboard";
 
 export default function AppRoutes() {
   const [checkHealth, authHealth] = useAuthHealthMutation();
+  const [userRole, setUserRole] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-
+  const currentUser = useSelector(selectCurrentUserPayload);
   useEffect(() => {
     const token = LocalStorageService.getItem("AUTH_TOKEN_STATE");
     if (token) {
       dispatch(setCredentials(token));
+      console.log("token", token);
     }
-
+    if (currentUser) {
+      if (currentUser.roles.includes(Role.ADMIN)) {
+        setUserRole(Role.ADMIN);
+      } else if (currentUser.roles.includes(Role.STUDENT)) {
+        setUserRole(Role.STUDENT);
+      }
+    }
     checkHealth();
     setLoading(false);
   }, []);
@@ -70,25 +93,41 @@ export default function AppRoutes() {
           <Route path="login" element={<SignInPage />} />
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
         </Route>
-        <Route path="/app" element={<MainLayout />}>
-          <Route index element={<Navigate to="dashboard" />} />
-          <Route path="admin/dashboard" element={<AdminDashboard/>} />
-          <Route path="admin/courses" element={<Courses />} />
-          <Route path="admin/courses/add" element={<AddCourse />} />
-          <Route path="admin/courses/update/:code" element={<EditCourse />} />
-          <Route path="admin/departments" element={<Departments />} />
-          <Route path="admin/departments/add" element={<AddDepartment />} />
-          <Route
-            path="admin/departments/update/:code"
-            element={<UpdateDepartment />}
-          />
-           <Route path="admin/locations" element={<Locations />} />
+
+        <Route path="/app" element={<RequireAuth />}>
+          <Route element={<MainLayout />}>
+            <Route
+              index
+              element={
+                <Navigate
+                  to={
+                    currentUser?.roles.includes(Role.STUDENT)
+                      ? "student/dashboard"
+                      : currentUser?.roles.includes(Role.ADMIN)
+                        ? "admin/dashboard"
+                        : "professor/dashboard"
+                  }
+                />
+              }
+            />
+            {/** Admin Stack */}
+            <Route path="admin/dashboard" element={<AdminDashboard />} />
+            <Route path="admin/courses" element={<Courses />} />
+            <Route path="admin/courses/add" element={<AddCourse />} />
+            <Route path="admin/courses/update/:code" element={<EditCourse />} />
+            <Route path="admin/departments" element={<Departments />} />
+            <Route path="admin/departments/add" element={<AddDepartment />} />
+            <Route
+              path="admin/departments/update/:code"
+              element={<UpdateDepartment />}
+            />
+            <Route path="admin/locations" element={<Locations />} />
             <Route path="admin/locations/add" element={<AddLocation />} />
             <Route
               path="admin/locations/update/:id"
               element={<UpdateLocation />}
             />
-             <Route path="admin/students" element={<AllStudent />} />
+            <Route path="admin/students" element={<AllStudent />} />
             <Route path="admin/students/add" element={<AddStudent />} />
             <Route
               path="admin/students/update/:studentCode"
@@ -102,10 +141,69 @@ export default function AppRoutes() {
               path="admin/professors/update/:userName"
               element={<EditProfessor />}
             />
-             <Route path="admin/announcements" element={<Announcement />} />
-            <Route path="admin/announcements/add" element={<SendAnnouncement />} />
+
             <Route path="admin/classes" element={<CourseClass />} />
             <Route path="admin/classes/add" element={<AddCourseClass />} />
+
+            {/** Student Stack */}
+            <Route path="student/dashboard" element={<StudentDashboard />} />
+            <Route path="student/viewschedule" element={<ViewSchedule />} />
+            <Route path="Student/courses" element={<StudentCourse />} />
+            {/** student role based stack */}
+            <Route element={<RequireAuth allRoles={[Role.STUDENT]} />}>
+              <Route
+                path={"student/announcements"}
+                element={<Announcement />}
+              />
+              <Route
+              path="student/profile/update/:studentCode"
+              element={<UpdateStudent />}
+            />
+              <Route path="student/profile" element={<Profile />} />
+            </Route>
+            {/** professor role based stack */}
+            <Route element={<RequireAuth allRoles={[Role.PROFESSOR]} />}>
+              <Route
+                path={"professor/announcements"}
+                element={<Announcement />}
+              />
+              <Route
+                path="professor/announcements/add"
+                element={<SendAnnouncement />}
+              />
+              <Route path={"professor/profile"} element={<Profile />} />
+              <Route
+                path="professor/dashboard"
+                element={<ProfessorDashboard />}
+              />
+               <Route path="professor/courses" element={<StudentCourse />} />
+                <Route
+              path="professor/profile/update/:userName"
+              element={<EditProfessor />}
+            />
+                        <Route path="professor/viewschedule" element={<ViewSchedule />} />
+
+            </Route>
+
+            {/** Admin  role based stack */}
+            <Route element={<RequireAuth allRoles={[Role.ADMIN]} />}>
+              <Route path={"admin/announcements"} element={<Announcement />} />
+              <Route
+                path="admin/announcements/add"
+                element={<SendAnnouncement />}
+              />
+              <Route
+                path="admin/students/student-info"
+                element={<StudentAcdemicRecord />}
+              />
+            </Route>
+            <Route
+              path="student/course-registration"
+              element={<CourseRegistration />}
+            />
+            <Route path="student/results" element={<Results />} />
+            <Route path="academic-advisor" element={<ACStudents />} />
+          </Route>
         </Route>
 
         {/** 404 page */}

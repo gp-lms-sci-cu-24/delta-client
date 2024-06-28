@@ -1,0 +1,115 @@
+import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
+const departmentrows: GridRowsProp = [
+  {
+    id: 1,
+    code: "CS 101",
+    name: "Introduction to Algorithms",
+    required: "Yes",
+    number_of_failure: "0",
+    credits_hours: "3",
+    Mandatory: "Yes",
+    status : "passed"
+  },
+  {
+    id: 2,
+    code: "CS 102",
+    name: "Data Structures",
+    required: "No",
+    number_of_failure: "0",
+    credits_hours: "3",
+    Mandatory: "Yes",
+    status : "failed"
+  },
+  {
+    id: 3,
+    code: "CS 103",
+    name: "Operating System",
+    required: "No",
+    number_of_failure: "0",
+    credits_hours: "3",
+    Mandatory: "Yes",
+    status : ""
+  },
+  {
+    id: 4,
+    code: "CS 104",
+    name: "Computer Networks",
+    required: "No",
+    number_of_failure: "0",
+    credits_hours: "3",
+    Mandatory: "Yes",
+    status : "failed"
+  },
+  {
+    id: 5,
+    code: "CS 105",
+    name: "Software Engineering",
+    required: "No",
+    number_of_failure: "0",
+    credits_hours: "3",
+    Mandatory: "Yes",
+    status : "passed"
+  },
+];
+const departmentColumns: GridColDef[] = [
+  {
+    field: "code",
+    headerName: "Code",
+    width: 70,
+    minWidth: 60,
+    align: "left",
+    headerAlign: "left",
+    sortable: false,
+    disableColumnMenu: true,
+  },
+  {
+    field: "name",
+    headerName: "Course",
+    minWidth: 200,
+    width: 220,
+    align: "left",
+    headerAlign: "left",
+    sortable: false,
+    disableColumnMenu: true,
+  },
+  {
+    field: "required",
+    headerName: "Required",
+    minWidth: 70,
+    width: 80,
+    align: "center",
+    headerAlign: "center",
+    sortable: false,
+    disableColumnMenu: true,
+  },
+  {
+    field: "number_of_failure",
+    headerName: "Failure",
+    minWidth: 70,
+    width: 80,
+    align: "center",
+    headerAlign: "center",
+    sortable: false,
+    disableColumnMenu: true,
+  },
+  {
+    field: "credits_hours",
+    headerName: "Credits Hours",
+    minWidth: 60,
+    width: 70,
+    align: "center",
+    headerAlign: "center",
+    sortable: false,
+    disableColumnMenu: true,
+  },
+  {
+    field: "Mandatory",
+    headerName: "Mandatory",
+    flex: 1,
+    align: "center",
+    headerAlign: "center",
+    sortable: false,
+    disableColumnMenu: true,
+  },
+];
+export { departmentrows, departmentColumns };

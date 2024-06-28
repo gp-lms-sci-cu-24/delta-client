@@ -119,7 +119,7 @@ function CourseCard(props: ICourseCardProps) {
         <Tooltip placement="right" title="Edit">
           <IconButton
             onClick={() =>
-              navigate(`/app/courses/update/${course.code}`)
+              navigate(`/app/admin/courses/update/${course.code}`)
             }
             aria-label="share"
           >
