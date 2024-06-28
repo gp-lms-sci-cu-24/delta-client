@@ -125,35 +125,35 @@ export default function AppRoutes() {
               <Route path="admin/classes/add" element={<AddCourseClass />} />
 
               {/** Student Stack */}
-              {/* <Route path="student/dashboard" element={<StudentDashboard />} />
-            <Route path="student/viewschedule" element={<ViewSchedule />} />
-            <Route path="Student/courses" element={<StudentCourse />} /> */}
+              <Route path="student/dashboard" element={<StudentDashboard />} />
+              <Route path="student/viewschedule" element={<ViewSchedule />} />
+              <Route path="Student/courses" element={<StudentCourse />} />
               {/** student role based stack */}
-              {/* <Route element={<RequireAuth allRoles={[Role.STUDENT]} />}>
-              <Route path={"student/announcements"} element={<Announcement />} />
-              <Route path="student/profile/update/:studentCode" element={<UpdateStudent />} />
-              <Route path="student/profile" element={<Profile />} />
-            </Route> */}
+              <Route element={<RequireAuth allRoles={[Role.STUDENT]} />}>
+                <Route path={"student/announcements"} element={<Announcement />} />
+                <Route path="student/profile/update/:studentCode" element={<UpdateStudent />} />
+                <Route path="student/profile" element={<Profile />} />
+              </Route>
               {/** professor role based stack */}
-              {/* <Route element={<RequireAuth allRoles={[Role.PROFESSOR]} />}>
-              <Route path={"professor/announcements"} element={<Announcement />} />
-              <Route path="professor/announcements/add" element={<SendAnnouncement />} />
-              <Route path={"professor/profile"} element={<Profile />} />
-              <Route path="professor/dashboard" element={<ProfessorDashboard />} />
-              <Route path="professor/courses" element={<StudentCourse />} />
-              <Route path="professor/profile/update/:userName" element={<EditProfessor />} />
-              <Route path="professor/viewschedule" element={<ViewSchedule />} />
-            </Route> */}
+              <Route element={<RequireAuth allRoles={[Role.PROFESSOR]} />}>
+                <Route path={"professor/announcements"} element={<Announcement />} />
+                <Route path="professor/announcements/add" element={<SendAnnouncement />} />
+                <Route path={"professor/profile"} element={<Profile />} />
+                <Route path="professor/dashboard" element={<ProfessorDashboard />} />
+                <Route path="professor/courses" element={<StudentCourse />} />
+                <Route path="professor/profile/update/:userName" element={<EditProfessor />} />
+                <Route path="professor/viewschedule" element={<ViewSchedule />} />
+              </Route>
 
               {/** Admin  role based stack */}
-              {/* <Route element={<RequireAuth allRoles={[Role.ADMIN]} />}>
-              <Route path={"admin/announcements"} element={<Announcement />} />
-              <Route path="admin/announcements/add" element={<SendAnnouncement />} />
-              <Route path="admin/students/student-info" element={<StudentAcdemicRecord />} />
-            </Route>
-            <Route path="student/course-registration" element={<CourseRegistration />} />
-            <Route path="student/results" element={<Results />} />
-            <Route path="academic-advisor" element={<ACStudents />} /> */}
+              <Route element={<RequireAuth allRoles={[Role.ADMIN]} />}>
+                <Route path={"admin/announcements"} element={<Announcement />} />
+                <Route path="admin/announcements/add" element={<SendAnnouncement />} />
+                <Route path="admin/students/student-info" element={<StudentAcdemicRecord />} />
+              </Route>
+              <Route path="student/course-registration" element={<CourseRegistration />} />
+              <Route path="student/results" element={<Results />} />
+              <Route path="academic-advisor" element={<ACStudents />} />
               {NotFoundRoute}
             </Route>
           </Route>
