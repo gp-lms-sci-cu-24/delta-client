@@ -89,7 +89,7 @@ export default function AppRoutes() {
         <Route
           index
           element={
-            <Navigate to={authHealth.data ? "/app/dashboard" : "/auth/login"} />
+            <Navigate to={authHealth.data ? dashboard : "/auth/login"} />
           }
         />
 
