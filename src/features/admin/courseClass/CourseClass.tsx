@@ -20,7 +20,7 @@ export default function CourseClass() {
 
   const handlePageChange = (
     _event: React.ChangeEvent<unknown>,
-    value: number
+    value: number,
   ) => {
     setPage(value);
   };
@@ -71,11 +71,19 @@ export default function CourseClass() {
       <Grid>
         {coursesClassesData?.length === 0 ? (
           <Grid item xs={12} sm={12} md={12} lg={12} sx={{}}>
+            <Box sx={{ my: 2 }}>
+              <Typography variant="h6" gutterBottom>
+                Filter classes
+              </Typography>
+              <Box sx={{ width: "100%" }}>
+                <StatesCheakBox value={states} onChange={setStates} />
+              </Box>
+            </Box>
             <EmptyPage messege="No classes found" animationFile={emptyList} />
           </Grid>
         ) : (
           <>
-            <Box sx={{my:2}}>
+            <Box sx={{ my: 2 }}>
               <Typography variant="h6" gutterBottom>
                 Filter classes
               </Typography>
