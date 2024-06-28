@@ -13,16 +13,8 @@ interface LocationCardProps {
 }
 const defaultImageUrl = "/assets/images/faculty.jpg";
 
-function LocationCard({
-  name,
-  info,
-  image,
-  maxCapacity,
-  id,
-  handleOnUpdate,
-}: LocationCardProps) {
-  const [deleteLocation, { isLoading: isDeleting }] =
-    useDeleteLocationMutation();
+function LocationCard({ name, info, image, maxCapacity, id, handleOnUpdate }: LocationCardProps) {
+  const [deleteLocation, { isLoading: isDeleting }] = useDeleteLocationMutation();
 
   const handleOnDelete = () => {
     deleteLocation(id)
@@ -32,7 +24,7 @@ function LocationCard({
           variant: "success",
         });
       })
-      .catch((err:any) => {
+      .catch((err) => {
         console.log(err);
         enqueueSnackbar(`An error occurred. Please try again.`, {
           variant: "error",
@@ -88,10 +80,7 @@ function LocationCard({
             {name}
           </Typography>
 
-          <DepartmentCardFadeMenu
-            onDelete={handleOnDelete}
-            onUpdate={handleOnUpdate}
-          />
+          <DepartmentCardFadeMenu onDelete={handleOnDelete} onUpdate={handleOnUpdate} />
         </Box>
 
         <Typography variant="body2" color="textSecondary">

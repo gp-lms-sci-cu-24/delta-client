@@ -1,13 +1,11 @@
-import { apiSlice, MessageResponse, Page, PageQuery } from "@/app/api";
-import { LocationDto, CreateLocationDto, LocationUploadImage,UpdateLocationDto } from "./types";
-
+import { apiSlice, MessageResponse } from "@/app/api";
+import { LocationDto, CreateLocationDto, LocationUploadImage, UpdateLocationDto } from "./types";
 
 const locationApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAllLocation: builder.query<Page<LocationDto>, PageQuery>({
-      query: (page) => ({
+    getAllLocation: builder.query<LocationDto[], void>({
+      query: () => ({
         url: "/v1/locations",
-        params: page,
         method: "GET",
       }),
       providesTags: ["Location"],
@@ -26,10 +24,7 @@ const locationApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
-    uploadLocationImage: builder.mutation<
-      MessageResponse,
-      LocationUploadImage
-    >({
+    uploadLocationImage: builder.mutation<MessageResponse, LocationUploadImage>({
       query: (param) => ({
         url: `/v1/storage/locations/${param.id}`,
         body: param.formData,
@@ -56,5 +51,11 @@ const locationApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllLocationQuery, useAddLocationMutation,useUploadLocationImageMutation,useGetLocationQuery,useDeleteLocationMutation,useUpdateLocationMutation } =
-  locationApiSlice;
+export const {
+  useGetAllLocationQuery,
+  useAddLocationMutation,
+  useUploadLocationImageMutation,
+  useGetLocationQuery,
+  useDeleteLocationMutation,
+  useUpdateLocationMutation,
+} = locationApiSlice;
