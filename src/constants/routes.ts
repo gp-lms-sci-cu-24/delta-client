@@ -1,9 +1,10 @@
 const ROUTES = {
-  SIGN_IN: "/signin",
-  AUTH_LOGIN: "/auth/forgot-password",
+  AUTH_LOGIN: "/auth/login",
   AUTH_FORGET_PASSWORD: "/auth/forgot-password",
-  HOME: "/app",
-  DASHBOARD: "/dashboard",
+  HOME: "/app/dashboard",
+
+  DASHBOARD: "/app/dashboard",
+
   PROFILE: "/p/:username",
   NOT_FOUND: "/not-found",
   COURSES: "admin/courses",

@@ -26,7 +26,6 @@
     /* Abslout path config */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
       "@app/*": ["src/app/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
@@ -34,7 +33,8 @@
       "@layouts/*": ["src/layouts/*"],
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"],
-      "@constants/*": ["src/constants/*"]
+      "@constants/*": ["src/constants/*"],
+      "@/*": ["src/*"]
     }
   },
   "include": ["src"]

@@ -10,6 +10,7 @@ import { GrMapLocation } from "react-icons/gr";
 import { GiTeacher } from "react-icons/gi";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import BookIcon from "@mui/icons-material/Book";
+import ROUTES from "./routes";
 
 export const StudentMenu = [
   {
@@ -115,7 +116,7 @@ export const ProfessorsMenu = [
 export const AdminMenu = [
   {
     name: "Dashboard",
-    path: "/app/admin/dashboard",
+    path: ROUTES.DASHBOARD,
     icon: <LuLayoutDashboard size={22} />,
   },
   {

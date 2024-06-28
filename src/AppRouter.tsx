@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "@components/NotFound";
-import { LoadingLayout, RequireAuth, RequireNotAuth } from "@components/router";
+import { LoadingLayout, RequireAuth, RequireNotAuth, SharedRoleRoute } from "@components/router";
 import { useAuthHealthMutation } from "@features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import LocalStorageService from "@services/storage";
-import {
-  selectCurrentUserPayload,
-  setCredentials,
-} from "@features/auth/authSlice";
+import { selectCurrentUserPayload, setCredentials } from "@features/auth/authSlice";
 import SignInPage from "@features/auth/pages/SignInPage";
 import ForgotPasswordPage from "@features/auth/pages/ForgotPasswordPage";
 import MainLayout from "@layouts/MainLayout";
@@ -45,31 +42,26 @@ import Results from "./features/professor/academicAdvisor/Results";
 import StudentAcdemicRecord from "./features/professor/academicAdvisor/StudentAcdemicRecord";
 import ACStudents from "./features/professor/academicAdvisor/ACStudents";
 import ProfessorDashboard from "./features/professor/dashboard/ProfessorDashboard";
+import ROUTES from "@constants/routes";
 
 export default function AppRoutes() {
   const [checkHealth, authHealth] = useAuthHealthMutation();
-  const [userRole, setUserRole] = useState<string>("");
-  const [dashboard, setDashboard] = useState<string>("");
   const [loading, setLoading] = useState(true);
+
+  // const [userRole, setUserRole] = useState<string>("");
+  // const [dashboard, setDashboard] = useState<string>("");
   const dispatch = useDispatch();
-  const currentUser = useSelector(selectCurrentUserPayload);
+  // const currentUser = useSelector(selectCurrentUserPayload);
+
+  const isAuthLoading = loading || authHealth.isLoading;
+  const isAuthed = authHealth.data?.roles;
+
+  const NotFoundRoute = <Route path="*" element={<NotFound />} />;
+
   useEffect(() => {
     const token = LocalStorageService.getItem("AUTH_TOKEN_STATE");
     if (token) {
       dispatch(setCredentials(token));
-      console.log("token", token);
-    }
-    if (currentUser) {
-      if (currentUser.roles.includes(Role.ADMIN)) {
-        setUserRole(Role.ADMIN);
-        setDashboard("/app/admin/dashboard");
-      } else if (currentUser.roles.includes(Role.STUDENT)) {
-        setUserRole(Role.STUDENT);
-        setDashboard("/app/student/dashboard");
-      } else if (currentUser.roles.includes(Role.PROFESSOR)) {
-        setUserRole(Role.PROFESSOR);
-        setDashboard("/app/professor/dashboard");
-      }
     }
     checkHealth();
     setLoading(false);
@@ -77,137 +69,91 @@ export default function AppRoutes() {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <LoadingLayout
-            loading={authHealth.isLoading || loading}
-            enableProgress
-          />
-        }
-      >
-        <Route
-          index
-          element={
-            <Navigate to={authHealth.data ? dashboard : "/auth/login"} />
-          }
-        />
+      <Route path="/" element={<LoadingLayout loading={isAuthLoading} enableProgress />}>
+        <Route index element={<Navigate to={isAuthed ? ROUTES.HOME : ROUTES.AUTH_LOGIN} />} />
 
         {/** Not Authed user Stack */}
         <Route path="/auth" element={<RequireNotAuth />}>
           <Route index element={<Navigate to="login" />} />
           <Route path="login" element={<SignInPage />} />
           <Route path="forgot-password" element={<ForgotPasswordPage />} />
+          {NotFoundRoute}
         </Route>
 
         <Route path="/app" element={<RequireAuth />}>
           <Route element={<MainLayout />}>
+            <Route index element={<Navigate to={ROUTES.HOME} />} />
+
+            {/** Shared Stack */}
             <Route
-              index
+              path="dashboard"
               element={
-                <Navigate
-                  to={
-                    currentUser?.roles.includes(Role.STUDENT)
-                      ? "student/dashboard"
-                      : currentUser?.roles.includes(Role.ADMIN)
-                        ? "admin/dashboard"
-                        : "professor/dashboard"
-                  }
+                <SharedRoleRoute
+                  admin={<AdminDashboard />}
+                  student={<StudentDashboard />}
+                  professor={<ProfessorDashboard />}
                 />
               }
             />
+
             {/** Admin Stack */}
-            <Route path="admin/dashboard" element={<AdminDashboard />} />
+
             <Route path="admin/courses" element={<Courses />} />
             <Route path="admin/courses/add" element={<AddCourse />} />
             <Route path="admin/courses/update/:code" element={<EditCourse />} />
+
             <Route path="admin/departments" element={<Departments />} />
             <Route path="admin/departments/add" element={<AddDepartment />} />
-            <Route
-              path="admin/departments/update/:code"
-              element={<UpdateDepartment />}
-            />
+            <Route path="admin/departments/update/:code" element={<UpdateDepartment />} />
+
             <Route path="admin/locations" element={<Locations />} />
             <Route path="admin/locations/add" element={<AddLocation />} />
-            <Route
-              path="admin/locations/update/:id"
-              element={<UpdateLocation />}
-            />
+            <Route path="admin/locations/update/:id" element={<UpdateLocation />} />
+
             <Route path="admin/students" element={<AllStudent />} />
             <Route path="admin/students/add" element={<AddStudent />} />
-            <Route
-              path="admin/students/update/:studentCode"
-              element={<UpdateStudent />}
-            />
+            <Route path="admin/students/update/:studentCode" element={<UpdateStudent />} />
+
             {/** professor */}
             <Route path="admin/professors" element={<AllProfessors />} />
             <Route path="admin/professors/add" element={<AddProfessor />} />
             <Route path="admin/professors/:id" element={<Professor />} />
-            <Route
-              path="admin/professors/update/:userName"
-              element={<EditProfessor />}
-            />
+            <Route path="admin/professors/update/:userName" element={<EditProfessor />} />
 
             <Route path="admin/classes" element={<CourseClass />} />
             <Route path="admin/classes/add" element={<AddCourseClass />} />
 
             {/** Student Stack */}
-            <Route path="student/dashboard" element={<StudentDashboard />} />
+            {/* <Route path="student/dashboard" element={<StudentDashboard />} />
             <Route path="student/viewschedule" element={<ViewSchedule />} />
-            <Route path="Student/courses" element={<StudentCourse />} />
+            <Route path="Student/courses" element={<StudentCourse />} /> */}
             {/** student role based stack */}
-            <Route element={<RequireAuth allRoles={[Role.STUDENT]} />}>
-              <Route
-                path={"student/announcements"}
-                element={<Announcement />}
-              />
-              <Route
-                path="student/profile/update/:studentCode"
-                element={<UpdateStudent />}
-              />
+            {/* <Route element={<RequireAuth allRoles={[Role.STUDENT]} />}>
+              <Route path={"student/announcements"} element={<Announcement />} />
+              <Route path="student/profile/update/:studentCode" element={<UpdateStudent />} />
               <Route path="student/profile" element={<Profile />} />
-            </Route>
+            </Route> */}
             {/** professor role based stack */}
-            <Route element={<RequireAuth allRoles={[Role.PROFESSOR]} />}>
-              <Route
-                path={"professor/announcements"}
-                element={<Announcement />}
-              />
-              <Route
-                path="professor/announcements/add"
-                element={<SendAnnouncement />}
-              />
+            {/* <Route element={<RequireAuth allRoles={[Role.PROFESSOR]} />}>
+              <Route path={"professor/announcements"} element={<Announcement />} />
+              <Route path="professor/announcements/add" element={<SendAnnouncement />} />
               <Route path={"professor/profile"} element={<Profile />} />
-              <Route
-                path="professor/dashboard"
-                element={<ProfessorDashboard />}
-              />
+              <Route path="professor/dashboard" element={<ProfessorDashboard />} />
               <Route path="professor/courses" element={<StudentCourse />} />
-              <Route
-                path="professor/profile/update/:userName"
-                element={<EditProfessor />}
-              />
+              <Route path="professor/profile/update/:userName" element={<EditProfessor />} />
               <Route path="professor/viewschedule" element={<ViewSchedule />} />
-            </Route>
+            </Route> */}
 
             {/** Admin  role based stack */}
-            <Route element={<RequireAuth allRoles={[Role.ADMIN]} />}>
+            {/* <Route element={<RequireAuth allRoles={[Role.ADMIN]} />}>
               <Route path={"admin/announcements"} element={<Announcement />} />
-              <Route
-                path="admin/announcements/add"
-                element={<SendAnnouncement />}
-              />
-              <Route
-                path="admin/students/student-info"
-                element={<StudentAcdemicRecord />}
-              />
+              <Route path="admin/announcements/add" element={<SendAnnouncement />} />
+              <Route path="admin/students/student-info" element={<StudentAcdemicRecord />} />
             </Route>
-            <Route
-              path="student/course-registration"
-              element={<CourseRegistration />}
-            />
+            <Route path="student/course-registration" element={<CourseRegistration />} />
             <Route path="student/results" element={<Results />} />
-            <Route path="academic-advisor" element={<ACStudents />} />
+            <Route path="academic-advisor" element={<ACStudents />} /> */}
+            {NotFoundRoute}
           </Route>
         </Route>
 
