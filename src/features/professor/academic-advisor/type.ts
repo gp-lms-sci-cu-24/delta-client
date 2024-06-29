@@ -22,7 +22,7 @@ export interface QueyStudentResultByYear {
   year: number;
 }
 export interface QueyStudentResultByYearAndSemester {
-  year: number;
-  semester: YearSemester;
-  student: number;
+  year: string;
+  semester: string;
+  student: string;
 }
