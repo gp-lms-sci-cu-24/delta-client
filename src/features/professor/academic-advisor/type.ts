@@ -22,11 +22,19 @@ export interface QueyStudentResultByYear {
   year: number;
 }
 export interface QueyStudentResultByYearAndSemester {
-  year: number;
-  semester: YearSemester;
-  student: number;
+  year: string;
+  semester: string;
+  student: string;
 }
-
+//student}/${body.year}/${body.semester}/${body.group}/${body.grade}/${body.course
+export interface AssignGradeQuery{
+  student:string;
+  year:string;
+  semester:string;
+  group:number;
+  grade:number;
+  course:string;
+}
 
 
 export interface CumulativeResultDto{
