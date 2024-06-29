@@ -1,4 +1,4 @@
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import StudentInfoCard from "./components/StudentInfoCard";
 import { useUserStateQuery } from "@/features/auth/authApiSlice";
@@ -8,27 +8,43 @@ import Header from "@/components/Header";
 import { columnsLevel } from "./Levels";
 import { StudentDto } from "@features/admin/student/type";
 import { YearSemester } from "@features/admin/course-class/type";
-import { useGetStudentResultByYearAndSemesterQuery } from "./courseResultApiSlice";
+import {
+  usePostStudentGradeMutation,
+  useGetStudentResultByYearAndSemesterQuery,
+} from "./courseResultApiSlice";
 import { useState } from "react";
 import { QueyStudentResultByYearAndSemester } from "./type";
 import { SelectField } from "@/components/inputs/SelectField";
+import { CourseResult, AssignGradeQuery } from "./type";
+import { useSnackbar } from "notistack";
 
+interface rowData {
+  id: string;
+  code: string;
+  subject: string;
+  semester: string;
+  degree: string;
+  rate: string;
+  group: string;
+  statues: string;
+}
+
+const semesterOptions: string[] = Object.values(YearSemester);
+const yearOptions = ["2023", "2024", "2025"];
 interface Props {
   id?: string;
 }
-const semesterOptions: string[] = Object.values(YearSemester);
-const yearOptions = ["2023", "2024", "2025"];
-
 function Results({ id }: Props) {
   const [selectedYear, setSelectedYear] = useState<string>("2024");
   const [selectedSemester, setSelectedSemester] = useState<string>(YearSemester.FIRST);
   let { data, isLoading } = useGetStudentByIdQuery(id !== undefined ? id : "");
+  const { enqueueSnackbar } = useSnackbar();
   const studetnQuery = useUserStateQuery();
   if (id === undefined) {
     data = studetnQuery.data as StudentDto;
     isLoading = false;
   }
-
+  const [assignGrade] = usePostStudentGradeMutation();
   const { data: results, isLoading: resLoading } = useGetStudentResultByYearAndSemesterQuery({
     year: selectedYear,
     student: id ?? "0",
@@ -39,6 +55,51 @@ function Results({ id }: Props) {
   console.log("year", selectedYear);
   console.log("semester", selectedSemester);
 
+  function structerdRes(results: CourseResult[] | undefined): GridRowsProp<rowData> {
+    if (!results) return [];
+    return results?.map((e) => {
+      return {
+        id: id ? id.toString() : "",
+        code: id ? id.toString() : "",
+        group: e.courseClass.groupNumber.toString(),
+        subject: e.courseClass.course.code.toString(),
+        semester: e.courseClass.semester.toString(),
+        degree: e.grade.toString(),
+        rate: e.rate.toString(),
+        statues: e.state.toString(),
+      };
+    });
+  }
+
+  function handleAssign(_oldrow: rowData, newrow: rowData) {
+    const q: AssignGradeQuery = {
+      student: newrow.id,
+      year: selectedYear,
+      semester: selectedSemester,
+      group: Number(newrow.group),
+      grade: Number(newrow.degree),
+      course: newrow.subject,
+    };
+    assignGrade(q)
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar(
+          `Grade ${newrow.degree} assigend to student ${id} successfully in course ${newrow.code}`,
+          {
+            variant: "success",
+          },
+        );
+      })
+      .catch((e) => {
+        console.log(e);
+        enqueueSnackbar(
+          `Grade ${newrow.degree} failed to assign to student ${id} in course ${newrow.code} \n because ${e.data.message}`,
+          {
+            variant: "error",
+          },
+        );
+      });
+  }
   if (isLoading) return <Loading />;
   return (
     <Box sx={{ p: 2, width: "100%", height: "100vh" }}>
@@ -88,7 +149,17 @@ function Results({ id }: Props) {
           />
         </Box>
       </Box>
-      <DataGrid rows={results} columns={columnsLevel} loading={resLoading} hideFooter />
+      <DataGrid
+        rows={structerdRes(results)}
+        columns={columnsLevel}
+        loading={resLoading}
+        processRowUpdate={(newrow, oldrow) => {
+          handleAssign(oldrow, newrow);
+
+          return newrow;
+        }}
+        hideFooter
+      />
     </Box>
   );
 }

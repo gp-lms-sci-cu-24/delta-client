@@ -1,6 +1,7 @@
 
 import { apiSlice } from "@/app/api";
 import {
+  AssignGradeQuery,
   CourseResult,
   QueyStudentResultByYear,
   QueyStudentResultByYearAndSemester,
@@ -35,6 +36,16 @@ const courseApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["CourseResult"],
     }),
+    postStudentGrade: builder.mutation<
+      CourseResult[],
+      AssignGradeQuery
+    >({
+      query: (body) => ({
+        url: `/v1/result/finish/${body.student}/${body.year}/${body.semester}/${body.group}/${body.grade}/${body.course}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["CourseResult"],
+    }),
   }),
 });
 
@@ -42,4 +53,5 @@ export const {
   useGetStudentResultByYearAndSemesterQuery,
   useGetStudentResultByYearQuery,
   useGetStudentResultQuery,
+  usePostStudentGradeMutation
 } = courseApiSlice;
