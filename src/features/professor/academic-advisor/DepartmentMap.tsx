@@ -4,6 +4,7 @@ import CustomDataGrid from "./components/CustomDataGrid";
 import { useEffect, useState } from "react";
 import { CumulativeResultDto } from "./type";
 import { useGetDepartmentMapQuery } from "./departmentMapSlice";
+import Loading from "@components/Loading";
 interface Props {
   id?: string;
 }
@@ -12,13 +13,15 @@ function DepartmentMap({ id }: Props) {
   const check = useMediaQuery(theme.breakpoints.down("md"));
   const [semester, setSemester] = useState<CumulativeResultDto[][]>([]);
   console.log("id", id);
-  const { data } = useGetDepartmentMapQuery(id || "__");
+  const { data ,isLoading} = useGetDepartmentMapQuery(id || "__");
   useEffect(() => {
     if (data) {
       setSemester(data);
     }
   }, [data]);
   console.log("semester", semester[0]);
+  if (isLoading) return <Loading />;
+
   return (
     <Box sx={{ p: 1, height: "100vh" }}>
       <Stack direction={check ? "column" : "row"} justifyContent={"space-between"}>
