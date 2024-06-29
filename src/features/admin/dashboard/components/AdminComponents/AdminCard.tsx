@@ -1,7 +1,7 @@
 import { Box, Card, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 interface IProps {
-  value: string;
+  value: number;
   title: string;
 }
 function AdminCard({ value, title }: IProps) {
