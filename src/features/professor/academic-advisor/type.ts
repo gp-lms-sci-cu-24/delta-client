@@ -1,6 +1,6 @@
+import { MakeOptionalExcept } from "@/utils";
 import { YearSemester } from "@features/admin/course-class/type";
 import { Course } from "@features/admin/mange-course/type";
-import { MakeOptionalExcept } from "@/utils";
 
 export interface CourseResult {
   grade: number;
@@ -25,4 +25,32 @@ export interface QueyStudentResultByYearAndSemester {
   year: string;
   semester: string;
   student: string;
+}
+
+
+
+export interface CumulativeResultDto{
+  courseCode: string;
+  courseName: string;
+  creditHours: number;
+  grade: number;
+  numberOfFail: number;
+  mandatory: boolean;
+  rate: Rate;
+  state: State;
+}
+  
+export enum Rate{
+  FAIL="FAIL",
+  POOR="POOR",
+  GOOD="GOOD",
+  VERY_GOOD="VERY_GOOD",
+  EXCELLENT="EXCELLENT"
+}
+
+export enum State{
+  FAILED="FAILED",
+  PASSED="PASSED",
+  ABSENCE="ABSENCE",
+  NEVER_TAKEN="NEVER_TAKEN"
 }
