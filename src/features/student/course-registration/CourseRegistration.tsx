@@ -1,55 +1,143 @@
-import {
-  Box,
-  Button,
-  MenuItem,
-  Select,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import CollapsibleTable from "./components/CollapsibleTable";
-import CurrentTable from "./components/CurrentTable";
 import { useState } from "react";
 import { enqueueSnackbar } from "notistack";
-import { useGetMyAvilableCoursesQuery } from "./courseRegistrationApiSlice";
-import { useGetAllByCourseMutation } from "@features/admin/course-class/courseClassApiSlice";
-import { StudentDto } from "@features/admin/student/type";
-import { CourseClass } from "@features/admin/course-class/type";
-import Loading from "@/components/Loading";
-import Header from "@/components/Header";
-import { useUserStateQuery } from "@/features/auth/authApiSlice";
+
+import { Box, Stack, Typography, useTheme } from "@mui/material";
+import Header from "@components/Header";
 import StudentInfoCard from "@features/professor/academic-advisor/components/StudentInfoCard";
+import Selector from "@components/Selector";
+import ViewCourseCard from "./components/ViewCourseCard";
+import ReigsteredClassesTable from "./components/ReigsteredClassesTable";
+import CollapsibleTable from "./components/CollapsibleTable";
+
+import { StudentDto } from "@features/admin/student/type";
+import { Course, CourseClass } from "@features/shared";
+
+import { useGetAllByCourseMutation } from "@features/admin/course-class/courseClassApiSlice";
+import { useUserStateQuery } from "@features/auth/authApiSlice";
+import {
+  useGetMyAvilableCoursesQuery,
+  useGetMyRegisteredCoursesQuery,
+  useRegisterCourseToMeMutation,
+  useRemoveRegisterMutation,
+} from "./courseRegistrationApiSlice";
+
+import BrowserNotSupportedIcon from "@mui/icons-material/BrowserNotSupported";
+import { isFetchBaseQueryError } from "@app/api";
 
 export default function CourseRegistration() {
   const studetnQuery = useUserStateQuery();
-  const [course, setCourse] = useState<string>();
-  const [groups, setGroups] = useState<CourseClass[]>();
-  const [getGroups] = useGetAllByCourseMutation();
-  const { data: Courses } = useGetMyAvilableCoursesQuery();
   const data = studetnQuery.data as StudentDto;
+
+  // logic
   const theme = useTheme();
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [groups, setGroups] = useState<CourseClass[]>();
+  const [registrationActionLoading, setRegistrationActionLoading] = useState<boolean>(false);
 
-  console.log("Courses", Courses);
-  const handleOnChoosingCourse = async () => {
-    console.log("course code", course);
-    try {
-      const data = (await getGroups(course ?? "").unwrap()).content;
-      console.log("data", data);
-      setGroups(data);
+  const [getGroups, getGroupsState] = useGetAllByCourseMutation();
+  const { data: coursesData, isLoading: coursesIsLoading } = useGetMyAvilableCoursesQuery();
+  const { data: registeredCourseClasses, isLoading: registeredLoading } =
+    useGetMyRegisteredCoursesQuery();
+  const [registerClass, registerClassState] = useRegisterCourseToMeMutation();
+  const [removeClass, removeClassState] = useRemoveRegisterMutation();
 
-      enqueueSnackbar(`groups for course is found `, {
-        variant: "success",
-      });
-    } catch {
-      enqueueSnackbar(`groups for course is found `, {
-        variant: "success",
-      });
-    }
+  const coursesOptions =
+    coursesData?.map((c) => ({ option: c.code, text: `${c.name} (${c.code})` })) ?? [];
+
+  const isLoading =
+    getGroupsState.isLoading || coursesIsLoading || registeredLoading || registrationActionLoading;
+  const isRegisteredCheck = (course: Course | null) =>
+    registeredCourseClasses?.some((c) => c.course.code === course?.code);
+  const isRegistered = isRegisteredCheck(selectedCourse);
+
+  const handleRegisterCourse = (courseClass: CourseClass) => {
+    if (isLoading) return;
+    setRegistrationActionLoading(true);
+    registerClass({
+      courseCode: courseClass.course.code,
+      year: courseClass.year,
+      semester: courseClass.semester,
+      group: courseClass.groupNumber,
+    })
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar(`Class registered Succefully`, {
+          variant: "success",
+        });
+        // setSelectedCourse(null);
+      })
+      .catch((error) => {
+        if (isFetchBaseQueryError(error)) {
+          const message =
+            (error.data as { message?: string }).message || "An error occured , try Again";
+          enqueueSnackbar(message, {
+            variant: "error",
+          });
+        }
+        enqueueSnackbar("An error occured , try Again", {
+          variant: "error",
+        });
+      })
+      .finally(() => setRegistrationActionLoading(false));
   };
 
-  if (studetnQuery.isLoading) return <Loading />;
+  const handleRemoveRegisterCourse = (courseClass: CourseClass) => {
+    if (isLoading) return;
+    setRegistrationActionLoading(true);
+    removeClass({
+      courseCode: courseClass.course.code,
+      year: courseClass.year,
+      semester: courseClass.semester,
+      group: courseClass.groupNumber,
+    })
+      .unwrap()
+      .then(() => {
+        enqueueSnackbar(`Class Removed`, {
+          variant: "success",
+        });
+        // setSelectedCourse(null);
+      })
+      .catch((error) => {
+        if (isFetchBaseQueryError(error)) {
+          const message =
+            (error.data as { message?: string }).message || "An error occured , try Again";
+          enqueueSnackbar(message, {
+            variant: "error",
+          });
+        }
+        enqueueSnackbar("An error occured , try Again", {
+          variant: "error",
+        });
+      })
+      .finally(() => setRegistrationActionLoading(false));
+  };
+
+  const changeSelectedCourse = (courseCode: string | null) => {
+    const course = coursesData?.find((c) => c.code === courseCode);
+    if (!course || isLoading) {
+      return;
+    }
+    setSelectedCourse(course);
+    if (isRegisteredCheck(course)) return;
+
+    getGroups(course.code)
+      .unwrap()
+      .then((result) => {
+        setGroups(result.content);
+        enqueueSnackbar(`groups for ${course?.name} is Loaded`, {
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        enqueueSnackbar(`Error Ocured when Loading groups`, {
+          variant: "error",
+        });
+        console.error(error);
+      });
+  };
 
   return (
-    <Box sx={{ p: 2, width: "100%", height: "100vh" }}>
+    <Box sx={{ p: 2, width: "100%", minHeight: "100vh", mb: 4 }}>
       <Header pageName="Registration" />
       <StudentInfoCard
         username={data?.username}
@@ -64,60 +152,75 @@ export default function CourseRegistration() {
         joiningYear={data?.joiningYear}
         profilePicture={data?.profilePicture}
       />
-      <Typography
+
+      <Stack
+        direction="row"
         sx={{
-          color: theme.palette.info.light,
-          fontWeight: "bold",
-          pt: 2,
-          pb: 2,
-          pl: 2,
+          border: 1,
+          borderColor: "rgba(0, 0, 0, 0.12)",
+          borderRadius: 1,
+          borderStyle: "solid",
+          minHeight: 350,
+          p: 2,
         }}
       >
-        choose a course
-      </Typography>
-
-      <Box sx={{ flexDirection: "row", display: "flex", pl: 1 }}>
-        <Select
-          labelId="course-select"
-          label="Course"
-          id="Course-select"
-          value={course}
-          onChange={(event) => setCourse(event.target.value)}
-          size="medium"
-        >
-          {Courses?.map((course) => (
-            <MenuItem value={course.code} key={course.code}>
-              {course.code}
-            </MenuItem>
-          ))}
-        </Select>
-
-        <Box sx={{ m: 2 }}>
-          <Button onClick={handleOnChoosingCourse}>Show groups</Button>
-        </Box>
-      </Box>
-
-      <Box sx={{ m: 2 }}>
-        <CollapsibleTable
-          rows={
-            !groups
-              ? []
-              : groups?.map(({ groupNumber, timings }) => ({
-                  name: "Group " + groupNumber.toString(),
-                  timeTable: !timings
-                    ? []
-                    : timings.map((t) => ({
-                        Day: t.day.toString(),
-                        StartAt: t.startTime.toString(),
-                        EndAt: t.endTime.toString(),
-                        Type: t.type.toString(),
-                      })),
-                }))
+        <Stack
+          width="50%"
+          flexDirection="column"
+          sx={
+            {
+              // borderRight: "1px solid rgba(224, 224, 224, 1)",
+            }
           }
-        />
-      </Box>
+        >
+          <Typography
+            sx={{
+              color: theme.palette.info.light,
+              fontWeight: "bold",
+              mb: 3,
+            }}
+          >
+            Course Selctor
+          </Typography>
+          <Stack direction="column" sx={{ mx: 2 }}>
+            <Selector
+              label="Choose Course"
+              title="Choose Course"
+              value={selectedCourse?.code ?? null}
+              setValue={changeSelectedCourse}
+              options={coursesOptions}
+              selectorComponentStyle={{ maxWidth: "400px" }}
+              isLoading={isLoading}
+            />
+            {selectedCourse ? (
+              <ViewCourseCard course={selectedCourse} />
+            ) : (
+              <>
+                <Typography variant="h1" textAlign="center" color="gray">
+                  <BrowserNotSupportedIcon sx={{ scale: "4" }} />
+                </Typography>
+                <Typography variant="h5" fontWeight="bold" py={2} textAlign="center" color="gray">
+                  No course Chossen
+                </Typography>
+              </>
+            )}
+          </Stack>
+        </Stack>
+        <Box width="50%" sx={{ backgroundColor: "" }}>
+          <CollapsibleTable
+            isLoading={getGroupsState.isLoading}
+            isRegistered={isRegistered}
+            data={groups}
+            handleRegister={handleRegisterCourse}
+          />
+        </Box>
+      </Stack>
 
-      <CurrentTable />
+      <ReigsteredClassesTable
+        courseClasses={registeredCourseClasses}
+        isLoading={registeredLoading}
+        removeCourseClassRegistration={handleRemoveRegisterCourse}
+      />
     </Box>
   );
 }

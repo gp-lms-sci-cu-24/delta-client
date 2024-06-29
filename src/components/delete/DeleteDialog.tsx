@@ -10,20 +10,21 @@ export type DeleteDialogOnCloseState = "delete" | "cancel";
 export interface DeleteDialogProps {
   open: boolean;
   onClose: (state: DeleteDialogOnCloseState) => void;
+  title?: string;
+  text?: string;
 }
 
-const DeleteDialog: React.FC<DeleteDialogProps> = ({ open, onClose }) => {
+const DeleteDialog: React.FC<DeleteDialogProps> = ({
+  open,
+  onClose,
+  title = "Delete Confirmation",
+  text = "Are you sure you want to delete?",
+}) => {
   return (
-    <Dialog
-      open={open}
-      onClose={() => onClose("cancel")}
-      aria-labelledby="delete-dialog-title"
-    >
-      <DialogTitle id="delete-dialog-title">{"Delete Department"}</DialogTitle>
+    <Dialog open={open} onClose={() => onClose("cancel")} aria-labelledby="delete-dialog-title">
+      <DialogTitle id="delete-dialog-title">{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="delete-dialog-description">
-          Are you sure you want to delete?
-        </DialogContentText>
+        <DialogContentText id="delete-dialog-description">{text}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => onClose("cancel")}>Cancel</Button>

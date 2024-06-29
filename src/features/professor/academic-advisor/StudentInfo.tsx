@@ -1,15 +1,13 @@
 import { Box } from "@mui/material";
 import StudentInfoCard from "./components/StudentInfoCard";
 import Loading from "@/components/Loading";
-import CurrentTable from "@features/student/course-registration/components/CurrentTable";
+import CurrentTable from "@features/student/course-registration/components/ReigsteredClassesTable";
 import { useGetStudentByIdQuery } from "@features/admin/student/studentApiSlice";
 interface Props {
   id?: string;
 }
 export default function StudentInfo({ id }: Props) {
-  const { data, isLoading } = useGetStudentByIdQuery(
-    id !== undefined ? id : ""
-  );
+  const { data, isLoading } = useGetStudentByIdQuery(id !== undefined ? id : "");
 
   if (isLoading) return <Loading />;
   return (

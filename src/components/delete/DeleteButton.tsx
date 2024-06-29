@@ -6,10 +6,12 @@ import { useState } from "react";
 export interface IDeleteButtonProps {
   onDelete: () => void;
   isLoading?: boolean;
+  dialogText?: string;
+  dialogTitle?: string;
 }
 
 export function DeleteButton(props: IDeleteButtonProps) {
-  const { onDelete, isLoading } = props;
+  const { onDelete, isLoading, dialogText, dialogTitle } = props;
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const handleDeleteAction = (state: DeleteDialogOnCloseState) => {
     if (state === "delete" && onDelete) onDelete();
@@ -18,19 +20,16 @@ export function DeleteButton(props: IDeleteButtonProps) {
   return (
     <>
       <Tooltip placement="top" title="Delete">
-        <IconButton
-          color="error"
-          onClick={() => setDeleteDialogOpen(true)}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <CircularProgress sx={{ color: "#1089d4" }} size={24} />
-          ) : (
-            <DeleteIcon />
-          )}
+        <IconButton color="error" onClick={() => setDeleteDialogOpen(true)} disabled={isLoading}>
+          {isLoading ? <CircularProgress sx={{ color: "#1089d4" }} size={24} /> : <DeleteIcon />}
         </IconButton>
       </Tooltip>
-      <DeleteDialog open={deleteDialogOpen} onClose={handleDeleteAction} />
+      <DeleteDialog
+        open={deleteDialogOpen}
+        onClose={handleDeleteAction}
+        text={dialogText}
+        title={dialogTitle}
+      />
     </>
   );
 }

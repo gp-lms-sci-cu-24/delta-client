@@ -87,3 +87,7 @@ type Hour =
   | "23";
 
 export type Time = `${Hour}:${TwoDigitNumber}:${TwoDigitNumber}`;
+
+export function viewTimeWithoutSeconds(time: Time) {
+  return time.split(":").slice(0, 2).join(":");
+}

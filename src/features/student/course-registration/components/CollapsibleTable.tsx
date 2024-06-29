@@ -6,43 +6,70 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import CollapsibleRow from "./CollapsibleTableRow";
 import emptyList from "../../../../assets/animations/emptyList.json";
-import { timingrow } from "../types";
 import { EmptyPage } from "@/components/empty/EmptyPage";
+import { CircularProgress } from "@mui/material";
+import { CourseClass } from "@features/shared";
+import CollapsibleRow from "./CollapsibleTableRow";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 interface props {
-  rows: timingrow[];
+  data?: CourseClass[];
+  isLoading?: boolean;
+  isRegistered?: boolean;
+  handleRegister?: (courseClass: CourseClass) => void;
 }
-export default function CollapsibleTable(data: props) {
+export default function CollapsibleTable({
+  isRegistered = false,
+  isLoading = false,
+  data,
+  handleRegister,
+}: props) {
   return (
     <TableContainer component={Paper} variant="outlined">
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell colSpan={6}>
-              <Typography
-                variant="body1"
-                align="center"
-                sx={{ fontWeight: "bold" }}
-              >
+              <Typography variant="body1" align="center" sx={{ fontWeight: "bold" }}>
                 Available Groups
               </Typography>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.rows.length === 0 ? (
+          {isLoading ? (
+            <TableRow sx={{ height: "270px" }}>
+              <TableCell colSpan={6} align="center">
+                <CircularProgress />
+                <Typography variant="body1" align="center" sx={{ fontWeight: "bold" }}>
+                  loading groups...
+                </Typography>
+              </TableCell>
+            </TableRow>
+          ) : isRegistered ? (
+            <TableRow sx={{ height: "270px" }}>
+              <TableCell colSpan={6} align="center">
+                <CheckCircleOutlineIcon color="success" sx={{ fontSize: "6rem" }} />
+                <Typography variant="body1" align="center" sx={{ fontWeight: "bold" }}>
+                  Course Is Already Registered
+                </Typography>
+              </TableCell>
+            </TableRow>
+          ) : !data || data?.length === 0 ? (
             <TableRow>
               <TableCell colSpan={6} align="center">
-                <EmptyPage
-                  messege="No groups found"
-                  animationFile={emptyList}
-                />
+                <EmptyPage messege="No groups" animationFile={emptyList} />
               </TableCell>
             </TableRow>
           ) : (
-            data.rows?.map((row) => <CollapsibleRow key={row.name} row={row} />)
+            data?.map((courseClass, idx) => (
+              <CollapsibleRow
+                key={idx}
+                courseClass={courseClass}
+                handleAddCourseClass={() => handleRegister?.(courseClass)}
+              />
+            ))
           )}
         </TableBody>
       </Table>

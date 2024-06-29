@@ -1,6 +1,7 @@
-import { apiSlice } from "@/app/api";
-import { RegisterCourseQuery } from "./type";
+import { apiSlice, MessageResponse } from "@/app/api";
 import { Course } from "@features/admin/mange-course/type";
+import { RegisterCourseQuery } from "./type";
+import { CourseClass } from "@features/shared";
 
 const courseApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,33 +12,33 @@ const courseApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["CourseRegister"],
     }),
-    registerCourseToMe: builder.mutation<Course[], RegisterCourseQuery>({
+    registerCourseToMe: builder.mutation<MessageResponse, RegisterCourseQuery>({
       query: (query) => ({
         url: `/v1/register/me/class/${query.courseCode}/${query.year}/${query.semester}/${query.group}`,
         method: "POST",
       }),
       invalidatesTags: ["CourseRegister"],
     }),
-    takeASeatForMe: builder.mutation<Course[], RegisterCourseQuery>({
+    takeASeatForMe: builder.mutation<MessageResponse, RegisterCourseQuery>({
       query: (query) => ({
         url: `/v1/register/me/class/${query.courseCode}/${query.year}/${query.semester}/${query.group}`,
         method: "POST",
       }),
       invalidatesTags: ["CourseRegister"],
     }),
-    getMyRegisteredCourses: builder.query<Course[], void>({
+    getMyRegisteredCourses: builder.query<CourseClass[], void>({
       query: () => ({
         url: "/v1/register/me/class",
         method: "GET",
       }),
       providesTags: ["CourseRegister"],
     }),
-    removeRegister: builder.mutation<Course[], RegisterCourseQuery>({
+    removeRegister: builder.mutation<MessageResponse, RegisterCourseQuery>({
       query: (query) => ({
         url: `/v1/register/me/class/${query.courseCode}/${query.year}/${query.semester}/${query.group}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["CourseRegister"],
+      invalidatesTags: ["CourseRegister", "CourseClass"],
     }),
   }),
 });

@@ -1,12 +1,22 @@
 import React from "react";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SxProps,
+  Theme,
+  CircularProgress,
+} from "@mui/material";
 
 interface ISelectorProps {
   value: string | null;
-  setValue: React.Dispatch<React.SetStateAction<string | null>>;
-  options: string[];
+  setValue: (value: string | null) => void;
+  options: string[] | { option: string; text: string }[];
   title: string;
   label: string;
+  selectorComponentStyle?: SxProps<Theme>;
+  isLoading?: boolean;
 }
 
 const Selector: React.FC<ISelectorProps> = ({
@@ -15,7 +25,14 @@ const Selector: React.FC<ISelectorProps> = ({
   options,
   title,
   label,
+  selectorComponentStyle,
+  isLoading = false,
 }) => {
+  const getOption = (option: string | { option: string; text: string }) =>
+    typeof option === "string" ? option : option.option;
+  const getText = (option: string | { option: string; text: string }) =>
+    typeof option === "string" ? option : option.text;
+
   return (
     <FormControl sx={{ flex: 1 }}>
       <InputLabel id={`${title.toLowerCase()}-select-label`} size="normal">
@@ -28,12 +45,25 @@ const Selector: React.FC<ISelectorProps> = ({
         value={value}
         onChange={(event) => setValue(event.target.value as string)}
         size="medium"
+        sx={{
+          ...selectorComponentStyle,
+          // "& .MuiSelect-icon": { color: "black", p: 0, m: 0, height: "100%" },
+        }}
+        // IconComponent={CircularProgress}
       >
-        {options.map((option) => (
-          <MenuItem value={option} key={option}>
-            {option}
+        {isLoading ? (
+          <MenuItem disabled sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+            <span style={{ width: "15px" }} />
+            Loading Data...
           </MenuItem>
-        ))}
+        ) : (
+          options.map((option) => (
+            <MenuItem value={getOption(option)} key={getOption(option)}>
+              {getText(option)}
+            </MenuItem>
+          ))
+        )}
       </Select>
     </FormControl>
   );
