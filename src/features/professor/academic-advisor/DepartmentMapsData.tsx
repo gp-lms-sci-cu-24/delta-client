@@ -1,4 +1,6 @@
+import { Box, Typography } from "@mui/material";
 import { GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import { State } from "./type";
 const departmentrows: GridRowsProp = [
   {
     id: 1,
@@ -53,17 +55,17 @@ const departmentrows: GridRowsProp = [
 ];
 const departmentColumns: GridColDef[] = [
   {
-    field: "code",
+    field: "courseCode",
     headerName: "Code",
-    width: 70,
-    minWidth: 60,
+    width: 90,
+    minWidth: 80,
     align: "left",
     headerAlign: "left",
     sortable: false,
     disableColumnMenu: true,
   },
   {
-    field: "name",
+    field: "courseName",
     headerName: "Course",
     minWidth: 200,
     width: 220,
@@ -71,19 +73,20 @@ const departmentColumns: GridColDef[] = [
     headerAlign: "left",
     sortable: false,
     disableColumnMenu: true,
+    renderCell: ({ row: { courseName } }) => {
+      return (
+        <Box display="flex"   alignItems="center" height="100%" style={{ whiteSpace: 'normal', wordWrap: 'break-word' , }}>
+          <Typography variant="subtitle2">
+            {courseName}
+          </Typography>
+        </Box>
+      );
+    },
+
   },
+  
   {
-    field: "required",
-    headerName: "Required",
-    minWidth: 70,
-    width: 80,
-    align: "center",
-    headerAlign: "center",
-    sortable: false,
-    disableColumnMenu: true,
-  },
-  {
-    field: "number_of_failure",
+    field: "numberOfFail",
     headerName: "Failure",
     minWidth: 70,
     width: 80,
@@ -91,9 +94,12 @@ const departmentColumns: GridColDef[] = [
     headerAlign: "center",
     sortable: false,
     disableColumnMenu: true,
+    renderCell: ({ row: { numberOfFail } }) => {
+      return <Typography display="flex" justifyContent="center"  alignItems="center" height="100%" variant="subtitle2" >{numberOfFail===0? "-" : numberOfFail }</Typography>;
+    },
   },
   {
-    field: "credits_hours",
+    field: "credit",
     headerName: "Credits Hours",
     minWidth: 60,
     width: 70,
@@ -103,13 +109,30 @@ const departmentColumns: GridColDef[] = [
     disableColumnMenu: true,
   },
   {
-    field: "Mandatory",
+    field: "grade",
+    headerName: "Grade",
+    minWidth: 60,
+    width: 70,
+    align: "center",
+    headerAlign: "center",
+    sortable: false,
+    disableColumnMenu: true,
+    renderCell: ({ row: { grade , state } }) => {
+      return <Typography display="flex" justifyContent="center"  alignItems="center" height="100%" variant="subtitle2" >{grade===0 && state===State.NEVER_TAKEN? "-" : grade }</Typography>;
+    },
+  },
+  {
+    field: "mandatory",
     headerName: "Mandatory",
     flex: 1,
     align: "center",
     headerAlign: "center",
     sortable: false,
     disableColumnMenu: true,
+    renderCell: ({ row: { mandatory } }) => {
+      return <Typography display="flex" justifyContent="center"  alignItems="center" height="100%" variant="subtitle2" >{mandatory? "✔️" : "❌"}</Typography>;
+    },
   },
+  
 ];
 export { departmentrows, departmentColumns };

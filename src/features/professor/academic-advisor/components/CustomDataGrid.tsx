@@ -1,9 +1,6 @@
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import {
-  DataGrid,
-  GridColDef,
-  GridValidRowModel,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import { State } from "../type";
 
 interface IProps {
   rows: readonly GridValidRowModel[];
@@ -11,9 +8,11 @@ interface IProps {
   title: string;
 }
 const getRowClassName = (params: { row: GridValidRowModel }) => {
-  if (params.row.status === "passed") {
+  if (params.row.state === State.PASSED) {
     return "row-passed";
-  } else if (params.row.status === "failed") {
+  } else if (params.row.state === State.ABSENCE) {
+    return "row-absence";
+  } else if (params.row.state === State.FAILED) {
     return "row-failed";
   }
   return "white";
@@ -38,11 +37,10 @@ const CustomDataGrid = ({ rows, columns, title }: IProps) => {
         hideFooter
         disableRowSelectionOnClick
         loading={false}
-        density="compact"
         getRowClassName={getRowClassName}
+        rowHeight={70}
         autoHeight
         sx={{
-          "--DataGrid-overlayHeight": "300px",
           "& .MuiDataGrid-cell:focus ,& .MuiDataGrid-columnHeader:focus ,& .MuiDataGrid-cell:focus-within":
             {
               outline: " none",
@@ -84,6 +82,17 @@ const CustomDataGrid = ({ rows, columns, title }: IProps) => {
               backgroundColor: "#f44336",
               color: "#ffffff",
             },
+          },
+          "& .row-absence": {
+            backgroundColor: "red",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "red",
+              color: "#ffffff",
+            },
+          },
+          "& .MuiDataGrid-row:hover": {
+            backgroundColor: "inherit", // Or 'transparent' or whatever color you'd like
           },
         }}
       />
