@@ -14,6 +14,7 @@ import { useAddCourseClassMutation } from "./courseClassApiSlice";
 import Header from "@/components/Header";
 import Selector from "@/components/Selector";
 import { useResponsiveStack } from "@/services/responsive";
+import { useSnackbar } from "notistack";
 
 export default function AddCourseClass() {
   const { isSmallDown } = useResponsiveStack();
@@ -22,7 +23,7 @@ export default function AddCourseClass() {
   const [selectedSemester, setSelectedSemester] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [timings, setTimings] = useState<CreateCourseClassTimingDto[]>([]);
-
+const { enqueueSnackbar } = useSnackbar();
   const {
     register,
     handleSubmit,
@@ -37,18 +38,34 @@ export default function AddCourseClass() {
   };
 
   const [addCourseClass, { isLoading }] = useAddCourseClassMutation();
+  console.log("professor",professor)
   const onSubmit = (data: CreateCourseClassDto) => {
     data.adminProfessor = professor ?? "";
     data.courseCode = course ?? "";
     data.semester = selectedSemester ?? "";
     data.year = Number(selectedYear == null ? "0" : selectedYear.split("/")[0]);
     data.timings = timings ?? [];
+    console.log("data", data);
     addCourseClass(data)
       .then((res) => {
-        console.log(res);
+        console.log("res",res);
+        if(res.error){
+          enqueueSnackbar("Error in create Course Class", {
+            variant: "error",
+          });
+        }
+        else {
+          enqueueSnackbar("Add Course Class Successfully", {
+            variant: "success",
+          });
+        }
+      
       })
       .catch((e) => {
-        console.log(e);
+        console.log("error", e);
+        enqueueSnackbar("Error in create Course Class", {
+          variant: "error",
+        });
       });
   };
   return (

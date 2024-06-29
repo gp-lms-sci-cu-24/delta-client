@@ -8,7 +8,7 @@ interface Props {
 }
 export default function StudentInfo({ id }: Props) {
   const { data, isLoading } = useGetStudentByIdQuery(id !== undefined ? id : "");
-
+console.log("data", data);
   if (isLoading) return <Loading />;
   return (
     <>

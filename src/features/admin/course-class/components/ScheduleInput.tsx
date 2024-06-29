@@ -24,6 +24,7 @@ import { ClassType, CreateCourseClassTimingDto } from "../type";
 import { Dayjs } from "dayjs";
 import Selector from "@/components/Selector";
 import { DayOfWeek } from "@/utils";
+import { SelectField } from "@components/inputs/SelectField";
 
 export interface IScheduleInputProps {
   value?: CreateCourseClassTimingDto[];
@@ -35,12 +36,9 @@ export interface IScheduleInputProps {
 }
 export function ScheduleInput(props: IScheduleInputProps) {
   const { value: schedules = [], onChange: setSchedules = () => {} } = props;
-  const { data } = useGetAllLocationQuery({
-    pageNo: 0,
-    pageSize: 5,
-  }); // TO-DO use find later
+  const { data } = useGetAllLocationQuery(); 
 
-  const locations = data?.content;
+  const locations = data;
   const [type, setType] = useState<string | null>(null);
   const [day, setDay] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(null);
@@ -49,7 +47,7 @@ export function ScheduleInput(props: IScheduleInputProps) {
   const [open, setOpen] = useState(false);
   const staticDays = Object.values(DayOfWeek);
   const staticTypes = Object.values(ClassType);
-
+console.log("location",typeof location)
   const handleStartTimeChange = (newTime: Dayjs) => {
     const originalDate = newTime.toDate();
 
@@ -183,17 +181,18 @@ export function ScheduleInput(props: IScheduleInputProps) {
             />
           </FormControl>
           <FormControl fullWidth margin="normal">
-            <Selector
+            {/* <Selector
               label="Location"
               value={location}
               setValue={setLocation}
               options={
                 locations?.map((e) => {
-                  return e.id.toString();
+                  return e.name;
                 }) ?? []
               }
               title="Choose Location"
-            />
+            /> */}
+            <SelectField label="Choose Location" value={location} setValue={(e) => setLocation(e.target.value)} options={locations?.map((e) => { return { value: e.id.toString(), label: e.name }; }) ?? []} error={false} helperText={""}  />
           </FormControl>
           <FormControl fullWidth margin="normal">
             <TimePickerViewRenderers

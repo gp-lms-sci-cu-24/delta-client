@@ -39,8 +39,8 @@ function UpdateStudent() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [updateStudent, { isLoading }] = useUpdateStudentMutation();
 
-  const departmentQuery = useGetAllDepartmentQuery({ pageNo: 0, pageSize: 20 });
-  const departmentsData = departmentQuery.data?.content || [];
+  const departmentQuery = useGetAllDepartmentQuery();
+  const departmentsData = departmentQuery.data || [];
 
   const extractedData = departmentsData.map((item) => ({
     value: item.code,

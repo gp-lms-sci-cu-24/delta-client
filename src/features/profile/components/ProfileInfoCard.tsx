@@ -49,7 +49,7 @@ const ProfileInfoCard = ({
           <ProfileDataField name="Phone Number" value={phoneNumber} />
         )}
 
-        <ProfileDataField name="UserName" value={userName} />
+        <ProfileDataField name="User Name" value={userName} />
         {nationalId && (
           <ProfileDataField name="National ID" value={nationalId} />
         )}

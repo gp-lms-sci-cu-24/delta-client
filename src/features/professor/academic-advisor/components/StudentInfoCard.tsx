@@ -38,7 +38,7 @@ export default function StudentInfoCard({
   return (
     <Grid container sx={{ mx: "auto", p: 2 }} spacing={2}>
       <Grid item xs={12} lg={2}>
-        <Avatar sx={{ bgcolor: deepOrange[500], width: 120, height: 120 }} variant="square">
+        <Avatar sx={{ bgcolor: deepOrange[500], width: 120, height: 120 , borderRadius:2 }} src={profilePicture} variant="square">
           N
         </Avatar>
       </Grid>

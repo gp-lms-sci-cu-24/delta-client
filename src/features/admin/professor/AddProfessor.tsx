@@ -27,13 +27,23 @@ function AddProfessor() {
 
   const onSubmit: SubmitHandler<CreateProfessor> = async (data) => {
     await AddProfessor(data)
-      .then(() => {
+      .then((result) => {
+        console.log("result", result);
+      if (result.error) {
+        enqueueSnackbar("Error in create Professor", {
+          variant: "error",
+        });
+      }
+      else {
         enqueueSnackbar("Professor created successfully", {
           variant: "success",
         });
-        reset();
+
+       reset();
+      }
       })
-      .catch(() => {
+      .catch((e) => {
+        console.error("Error in create Professor", e);
         enqueueSnackbar("Error in create Professor", {
           variant: "error",
         });
