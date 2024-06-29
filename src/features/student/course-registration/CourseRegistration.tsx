@@ -73,10 +73,11 @@ export default function CourseRegistration() {
           enqueueSnackbar(message, {
             variant: "error",
           });
+        } else {
+          enqueueSnackbar("An error occured , try Again", {
+            variant: "error",
+          });
         }
-        enqueueSnackbar("An error occured , try Again", {
-          variant: "error",
-        });
       })
       .finally(() => setRegistrationActionLoading(false));
   };

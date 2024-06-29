@@ -1,10 +1,5 @@
 import { apiSlice, baseApiSlice, MessageResponse } from "@app/api";
-import {
-  AuthStateResponse,
-  Credentials,
-  LoginResponse,
-  UserState,
-} from "./types";
+import { AuthStateResponse, Credentials, LoginResponse, UserState } from "./types";
 
 const authApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -36,11 +31,17 @@ const authApiSliceWithRefresh = apiSlice.injectEndpoints({
       query: () => ({
         url: "/v1/users/me",
       }),
-      providesTags: ["User"],
+      providesTags: [
+        "User",
+        "CourseRegister",
+        "CourseResult",
+        "Student",
+        "Professor",
+        "Department",
+      ],
     }),
   }),
 });
 
 export const { useLoginMutation, useLogoutMutation } = authApiSlice;
-export const { useAuthHealthMutation, useUserStateQuery } =
-  authApiSliceWithRefresh;
+export const { useAuthHealthMutation, useUserStateQuery } = authApiSliceWithRefresh;
