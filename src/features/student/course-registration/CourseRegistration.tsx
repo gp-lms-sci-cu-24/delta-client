@@ -11,13 +11,13 @@ import CurrentTable from "./components/CurrentTable";
 import { useState } from "react";
 import { enqueueSnackbar } from "notistack";
 import { useGetMyAvilableCoursesQuery } from "./courseRegistrationApiSlice";
-import { useGetAllByCourseMutation } from "@features/admin/courseClass/courseClassApiSlice";
+import { useGetAllByCourseMutation } from "@features/admin/course-class/courseClassApiSlice";
 import { StudentDto } from "@features/admin/student/type";
-import { CourseClass } from "@features/admin/courseClass/type";
+import { CourseClass } from "@features/admin/course-class/type";
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
 import { useUserStateQuery } from "@/features/auth/authApiSlice";
-import StudentInfoCard from "@/features/professor/academicAdvisor/components/StudentInfoCard";
+import StudentInfoCard from "@features/professor/academic-advisor/components/StudentInfoCard";
 
 export default function CourseRegistration() {
   const studetnQuery = useUserStateQuery();

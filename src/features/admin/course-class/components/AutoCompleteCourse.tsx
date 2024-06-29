@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
-import { useSearchMutation } from "../../MangeCourse/courseApiSlice";
+import { useSearchMutation } from "@features/admin/mange-course/courseApiSlice";
 
 export interface IAutoCompleteCourseProps {
   value: string;

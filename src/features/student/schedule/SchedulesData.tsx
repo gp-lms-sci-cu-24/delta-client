@@ -2,7 +2,7 @@ interface ICourses {
   title: string;
   imageUrl: string;
 }
-import Image from "/src/features/Student/schedule/assets/exam.jpg"
+import Image from "/src/features/student/schedule/assets/exam.jpg"
 const Schedules: ICourses[] = [
   {
     title: "term schedule",

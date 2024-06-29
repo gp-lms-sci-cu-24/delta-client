@@ -1,6 +1,6 @@
 import { apiSlice } from "@/app/api";
 import { RegisterCourseQuery } from "./type";
-import { Course } from "@features/admin/MangeCourse/type";
+import { Course } from "@features/admin/mange-course/type";
 
 const courseApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

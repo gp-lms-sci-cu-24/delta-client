@@ -1,7 +1,7 @@
 import { PageQuery } from "@/app/api";
 import { LocationDto } from "../location/types";
 import { Professor } from "../professor/types";
-import { Course } from "../MangeCourse/type";
+import { Course } from "@features/admin/mange-course/type";
 import { DayOfWeek, MakeOptionalExcept, Time } from "@/utils";
 
 export interface CourseClassQuery extends PageQuery {

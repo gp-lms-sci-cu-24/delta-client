@@ -1,5 +1,5 @@
-import { YearSemester } from "@features/admin/courseClass/type";
-import { Course } from "@features/admin/MangeCourse/type";
+import { YearSemester } from "@features/admin/course-class/type";
+import { Course } from "@features/admin/mange-course/type";
 import { MakeOptionalExcept } from "@/utils";
 
 export interface CourseResult {

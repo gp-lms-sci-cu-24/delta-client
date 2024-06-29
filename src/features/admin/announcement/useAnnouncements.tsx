@@ -3,7 +3,7 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { useDispatch, useSelector } from "react-redux";
 import { useUserStateQuery } from "@/features/auth/authApiSlice";
 import { selectCurrentUserPayload, setCredentials } from "@/features/auth/authSlice";
-import { Axios } from "@/services/Axios/Axios";
+import { Axios } from "@services/axios/Axios";
 import { Role } from "@/features/auth/types";
 import addNotification from 'react-push-notification';
 
