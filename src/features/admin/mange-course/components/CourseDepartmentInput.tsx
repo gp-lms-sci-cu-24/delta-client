@@ -40,10 +40,7 @@ export function CourseDepartmentInput(props: ICourseDepartmentInputProps) {
     value: departmentsCourse = [],
     onChange: setDepartmentsCourse = () => {},
   } = props;
-  const departmentQuery = useGetAllDepartmentQuery({
-    pageNo: 0,
-    pageSize: 100,
-  });
+  const departmentQuery = useGetAllDepartmentQuery();
 
   const [department, setDepartment] = useState<string | undefined>();
   const [semester, setSemester] = useState<string | undefined>();
@@ -177,7 +174,7 @@ export function CourseDepartmentInput(props: ICourseDepartmentInputProps) {
                 onChange={(event) => setDepartment(event.target.value)}
                 size="medium"
               >
-                {departmentQuery.data?.content
+                {departmentQuery.data
                   ?.filter(
                     (d) =>
                       !departmentsCourse.find(
