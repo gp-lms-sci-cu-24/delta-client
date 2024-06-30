@@ -81,7 +81,7 @@ export default function CourseRegistration() {
       })
       .finally(() => setRegistrationActionLoading(false));
   };
-
+console.log("coursesData",coursesData)
   const handleRemoveRegisterCourse = (courseClass: CourseClass) => {
     if (isLoading) return;
     setRegistrationActionLoading(true);

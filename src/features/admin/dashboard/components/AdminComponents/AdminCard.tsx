@@ -32,13 +32,13 @@ function AdminCard({ value, title, Icon, blur, onMouseEnter, onMouseLeave }: IPr
         width: "88%",
         justifyContent: "center",
         alignItems: "center",
-        filter: blur ? "blur(4px)" : "none",
+        filter: blur ? "blur(2px)" : "none",
         transition: "all 0.3s ease-in-out",
         "&:hover": {
           zIndex: 1,
           width: "90%",
           backgroundColor: "#f5f5f5",
-          transform: "scale(1.2)",
+          transform: "scale(1.1)",
           boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         },
       }}
@@ -68,11 +68,11 @@ function AdminCard({ value, title, Icon, blur, onMouseEnter, onMouseLeave }: IPr
         </motion.div>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", p: 1, flex: 1 }}>
-        <Typography variant="subtitle2" sx={{ color: "#535353", fontWeight: "bold" }}>
-          {value}
-        </Typography>
-        <Typography variant="body2" sx={{ color: "#535353" }}>
+      <Typography variant="body2" sx={{ color: "#535353" }}>
           {title}
+        </Typography>
+         <Typography variant="subtitle2" sx={{ color: "#535353", fontWeight: "bold" }}>
+          {value}
         </Typography>
       </Box>
     </Card>
