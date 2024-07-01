@@ -5,13 +5,40 @@ import ClassTwoToneIcon from "@mui/icons-material/ClassTwoTone";
 import Groups2TwoToneIcon from "@mui/icons-material/Groups2TwoTone";
 import { Typography } from "@mui/material";
 import ViewerExtraComponent from "./components/ViewerExtraComponent";
-import events from "./Events";
+import { useGetMyScheduleQuery } from "./scheduleApiSlice";
+import { ClassType } from "@features/shared";
+import { dayAndTimeToDate } from "@utils/helpers";
+
 function ViewSchedule() {
+  const { data, isLoading } = useGetMyScheduleQuery();
+  const colorDependOnClass = (classType: ClassType) =>
+    classType === ClassType.LABORATORY_SECTION
+      ? "darkorange"
+      : classType === ClassType.THEORETICAL_LECTURE
+        ? "darkcyan"
+        : "darkblue";
+  const events = data?.map((event, idx) => ({
+    event_id: idx,
+    title: `${event.classType} ${event.course.name}`,
+    course: `${event.course.name} (${event.course.code})`,
+    professor: `${event.professor.firstName} ${event.professor.lastName}`,
+    start: dayAndTimeToDate(event.day, event.startTime),
+    end: dayAndTimeToDate(event.day, event.endTime),
+    location: `${event.location.name} (${event.location.path})`,
+    color: colorDependOnClass(event.classType),
+    group: `group ${event.courseGroup}`,
+  }));
+
+  console.log("Events:", events);
+  console.log("isLoading:", isLoading);
+
+  // useEffect(() => console.log("render"), [isLoading, data]);
+
   return (
     <Scheduler
       agenda={false}
+      // loading={isLoading}
       month={null}
-
       viewerExtraComponent={(_fields, event) => {
         const handleClick = () => {
           console.log("Location clicked:", event.location);
@@ -67,7 +94,7 @@ function ViewSchedule() {
       }}
       view="week"
       week={{
-        weekDays: [0, 1, 2, 3, 4, 5,6],
+        weekDays: [0, 1, 2, 3, 4, 5, 6],
         weekStartOn: 6,
         startHour: 7,
         endHour: 20,
@@ -75,12 +102,16 @@ function ViewSchedule() {
         navigation: true,
         disableGoToDay: true,
       }}
+      navigation={false}
       deletable={false}
       draggable={false}
       editable={false}
       disableViewer={false}
       hourFormat="12"
-      events={events}
+      // getRemoteEvents={async () => events}
+      events={events ?? []}
+      // onViewChange={(view, agenda) => console.log("View Changed:", view, "  ,agenda", agenda)}
+      // onSelectedDateChange={(date) => console.log("Selected Date:", date)}
     />
   );
 }
