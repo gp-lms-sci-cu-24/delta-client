@@ -1,6 +1,5 @@
 import { Level, StudentDto } from "@features/admin/student/type";
-import { useResponsiveStack } from "@/services/responsive";
-import { Box, Typography, useTheme, Grid } from "@mui/material";
+import { Box, useTheme, Grid } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import StudentSammary from "./studentComponents/StudentSummary";
 import { useEffect, useState } from "react";
@@ -10,7 +9,6 @@ import PaymentInformation from "./studentComponents/PaymentInformation";
 import { PaymentInformationData } from "./data/StudentDashboard";
 import Agenda from "./studentComponents/Agenda";
 import StudentConfigurations from "./studentComponents/StudentConfigurations";
-import OverallPerformance from "./studentComponents/OverallPerformance";
 import { useUserStateQuery } from "@features/auth/authApiSlice";
 import HeaderDataField from "@components/HeaderDataField";
 
@@ -20,15 +18,14 @@ import HeaderDataField from "@components/HeaderDataField";
 
 export default function StudentDashboard() {
   const theme = useTheme();
-  const { data, isLoading, isError, error } = useUserStateQuery();
-  const { isXSmall } = useResponsiveStack();
+  const { data, isLoading } = useUserStateQuery();
   const [student, setStudent] = useState<StudentDto>();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   useEffect(() => {
     if (data) setStudent(data as StudentDto);
-    if (isError) console.log("error", error);
   }, [data]);
+
   console.log("student", data);
   if (isLoading) return <LoadingSkeletonGrids />;
   const cards = [

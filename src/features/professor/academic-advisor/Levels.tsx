@@ -11,7 +11,7 @@ const columnsLevel: GridColDef[] = [
   },
   {
     field: "subject",
-    headerName: "Student Code",
+    headerName: "course Code",
     flex: 1,
     align: "center",
     headerAlign: "center",
