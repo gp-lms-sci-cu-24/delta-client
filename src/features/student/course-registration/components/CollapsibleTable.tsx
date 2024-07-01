@@ -17,11 +17,13 @@ interface props {
   data?: CourseClass[];
   isLoading?: boolean;
   isRegistered?: boolean;
+  isRegistering?: boolean;
   handleRegister?: (courseClass: CourseClass) => void;
 }
 export default function CollapsibleTable({
   isRegistered = false,
   isLoading = false,
+  isRegistering,
   data,
   handleRegister,
 }: props) {
@@ -65,6 +67,7 @@ export default function CollapsibleTable({
           ) : (
             data?.map((courseClass, idx) => (
               <CollapsibleRow
+                isLoading={isRegistering}
                 key={idx}
                 courseClass={courseClass}
                 handleAddCourseClass={() => handleRegister?.(courseClass)}

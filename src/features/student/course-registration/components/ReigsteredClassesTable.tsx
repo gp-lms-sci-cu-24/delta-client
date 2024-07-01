@@ -6,12 +6,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import emptyList from "@assets/animations/emptyList.json";
 import { EmptyPage } from "@/components/empty/EmptyPage";
 import { CourseClass } from "@features/shared";
 import { DeleteButton } from "@components/delete/DeleteButton";
-
 export interface IReigsteredClassesTableProps {
   courseClasses?: CourseClass[];
   isLoading?: boolean;
@@ -70,9 +70,18 @@ export default function ReigsteredClassesTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.length === 0 ? (
+          {isLoading ? (
             <TableRow>
-              <TableCell colSpan={6} align="center">
+              <TableCell colSpan={7} align="center">
+                <CircularProgress />
+                <Typography variant="body1" align="center" sx={{ fontWeight: "bold" }}>
+                  loading timetable...
+                </Typography>
+              </TableCell>
+            </TableRow>
+          ) : data.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={7} align="center">
                 <EmptyPage messege="No Course registered" animationFile={emptyList} />
               </TableCell>
             </TableRow>

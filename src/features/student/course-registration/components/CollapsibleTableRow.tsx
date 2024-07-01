@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
-import { Box, Button, Collapse, Typography } from "@mui/material";
+import { Box, Collapse, Typography } from "@mui/material";
 import GroupsIcon from "@mui/icons-material/Groups";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -15,15 +15,18 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { CourseClass } from "@features/shared";
 import { viewTimeWithoutSeconds } from "@utils/types/time";
 import ConfirmDialog from "@components/ConfirmDialog";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 export interface ICollapsibleRowProps {
   courseClass: CourseClass;
   handleAddCourseClass?: () => void;
+  isLoading?: boolean;
 }
 
 export default function CollapsibleRow({
   courseClass,
   handleAddCourseClass,
+  isLoading,
 }: ICollapsibleRowProps) {
   const available = courseClass.numberOfStudentsRegistered < courseClass.maxCapacity;
   const almostAvailable = courseClass.numberOfStudentsRegistered > courseClass.maxCapacity * 0.8;
@@ -73,10 +76,11 @@ export default function CollapsibleRow({
         </TableCell>
 
         <TableCell style={{ width: 170 }} align="right">
-          <Button
+          <LoadingButton
             variant="outlined"
             onClick={() => setConfirmDialogOpen(true)}
             disabled={!available}
+            loading={isLoading}
             sx={{
               "&:hover": {
                 border: "1px solid #1089d4",
@@ -86,7 +90,7 @@ export default function CollapsibleRow({
             }}
           >
             Select Group
-          </Button>
+          </LoadingButton>
         </TableCell>
       </TableRow>
       <TableRow>

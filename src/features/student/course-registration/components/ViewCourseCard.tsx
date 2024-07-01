@@ -1,5 +1,5 @@
 import { Course } from "@features/shared";
-import { Avatar, Box, Chip, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Chip, Stack, Typography } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 
 export interface IViewCourseCardProps {
@@ -8,13 +8,17 @@ export interface IViewCourseCardProps {
 
 export default function ViewCourseCard({ course }: IViewCourseCardProps) {
   return (
-    <Grid container sx={{ mt: 3 }}>
-      <Grid item xs={3}>
-        <Avatar sx={{ width: 120, height: 120 }} variant="square">
+    <Stack
+      flexDirection={{ xs: "column", sm: "row" }}
+      justifyContent="center"
+      sx={{ mt: 3, mb: 2 }}
+    >
+      <Stack flex={1} alignItems={{ xs: "center", sm: "start" }} maxWidth={130} margin="auto">
+        <Avatar sx={{ width: 120, height: 120, m: 0.5 }} variant="rounded">
           {course.image ? <img src={course.image} alt="course" /> : course.code}
         </Avatar>
-      </Grid>
-      <Grid item xs={9}>
+      </Stack>
+      <Stack flex={2} flexDirection="column" alignItems={{ xs: "center", sm: "start" }}>
         <Typography variant="body1" sx={{ fontWeight: "bold" }}>
           {course.name}
         </Typography>
@@ -36,7 +40,7 @@ export default function ViewCourseCard({ course }: IViewCourseCardProps) {
             ))
           )}
         </Box>
-      </Grid>
-    </Grid>
+      </Stack>
+    </Stack>
   );
 }
