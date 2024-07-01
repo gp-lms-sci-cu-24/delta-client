@@ -109,9 +109,9 @@ export default function StudentDashboard() {
         </Grid>
 
         {/* Overall performance card */}
-        <Grid item xs={12} sm={12} md={12} lg={12}>
+        {/* <Grid item xs={12} sm={12} md={12} lg={12}>
           <OverallPerformance gpaData={[3.2, 2.9, 3.3, 3.5]} />
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid2>
   );
