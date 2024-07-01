@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import HeaderDataField from "@/components/HeaderDataField";
 import { useGetDashboardDataQuery } from "./dashboardApiSlice";
 import { DashboardDto } from "./type";
@@ -17,14 +17,11 @@ function AdminDashboard() {
   const { data, isLoading } = useGetDashboardDataQuery();
   const [dashboardData, setDashboardData] = useState<DashboardDto>();
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const theme = useTheme();
 
-  const text = "Welcome Back Admin".split(" ");
   useEffect(() => {
     if (data) {
       setDashboardData(data);
       console.log("data", data);
-      console.log("dashboardData", dashboardData);
     }
   }, [data]);
   if (isLoading) return <Loading />;
@@ -62,16 +59,14 @@ function AdminDashboard() {
   ];
   const yearsData = [
     ["Year", "Student"],
-    ["2014", 1000],
-    ["2015", 1170],
-    ["2016", 660],
-    ["2017", 5000],
-    ["2019", 400],
+    ["2019", 3200],
+    ["2020", 4000],
+    ["2021", 3500],
+    ["2022", 3800],
+    ["2023", 4800],
+    ["2024", 5600],
   ];
 
-  const options = {
-      title: "Students per year",   
-  };
   return (
     <Box
       sx={{
@@ -97,14 +92,7 @@ function AdminDashboard() {
         <Grid item xs={12} md={6} lg={6}>
           <CustomCard
             header="Total Students per year"
-            children={
-              <Chart
-                chartType="Bar"
-                height="300px"
-                width={"100%"}
-                data={yearsData}
-              />
-            }
+            children={<Chart chartType="Bar" height="300px" width={"100%"} data={yearsData} />}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={6}>
