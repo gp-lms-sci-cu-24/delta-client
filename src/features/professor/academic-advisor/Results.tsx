@@ -40,14 +40,15 @@ function Results({ id }: Props) {
   let { data, isLoading } = useGetStudentByIdQuery(id !== undefined ? id : "");
   const { enqueueSnackbar } = useSnackbar();
   const studetnQuery = useUserStateQuery();
-  if (id === undefined) {
+  if (!id) {
     data = studetnQuery.data as StudentDto;
+    id = data.username;
     isLoading = false;
   }
   const [assignGrade] = usePostStudentGradeMutation();
   const { data: results, isLoading: resLoading } = useGetStudentResultByYearAndSemesterQuery({
     year: selectedYear,
-    student: id ?? "0",
+    student: id ?? "2027115",
     semester: selectedSemester,
   } as QueyStudentResultByYearAndSemester);
 
@@ -59,7 +60,7 @@ function Results({ id }: Props) {
     if (!results) return [];
     return results?.map((e) => {
       return {
-        id: id ? id.toString() : "",
+        id: e.courseClass.course.code.toString(),
         code: id ? id.toString() : "",
         group: e.courseClass.groupNumber.toString(),
         subject: e.courseClass.course.code.toString(),

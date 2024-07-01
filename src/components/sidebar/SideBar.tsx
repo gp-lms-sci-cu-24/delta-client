@@ -18,6 +18,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { blue } from "@mui/material/colors";
 import { SideMenuItem } from "./types";
+import Logo from "../../assets/logo.svg";
 
 export interface ISideBarProps {
   open?: boolean;
@@ -25,11 +26,7 @@ export interface ISideBarProps {
   menu?: SideMenuItem[];
 }
 
-export default function SideBar({
-  open,
-  handleDrawerClose,
-  menu,
-}: ISideBarProps) {
+export default function SideBar({ open, handleDrawerClose, menu }: ISideBarProps) {
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -76,16 +73,14 @@ export default function SideBar({
           ...openedMixin(theme),
           "& .MuiDrawer-paper": {
             ...openedMixin(theme),
-            backgroundColor:
-              theme.palette.mode === "light" ? "#EAEEF4" : "#000",
+            backgroundColor: theme.palette.mode === "light" ? "#EAEEF4" : "#000",
           }, // Also set it for the paper variant when open
         }),
         ...(!open && {
           ...closedMixin(theme),
           "& .MuiDrawer-paper": {
             ...closedMixin(theme),
-            backgroundColor:
-              theme.palette.mode === "light" ? "#EAEEF4" : "#000",
+            backgroundColor: theme.palette.mode === "light" ? "#EAEEF4" : "#000",
           }, // And when it's not open
         }),
       }}
@@ -97,11 +92,8 @@ export default function SideBar({
           <ChevronLeftIcon />
         </IconButton>
       </DrawerHeader>
-      <Box
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-      >
-        DELTA
-        {/* <img src={Logo} height={open ? 160 : 60} width={open ? 160 : 60} /> */}
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src={Logo} height={open ? 160 : 60} width={open ? 160 : 60} />
       </Box>
       <List>
         {menu &&
@@ -114,8 +106,7 @@ export default function SideBar({
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
                     backgroundColor:
-                      location.pathname === item.path ||
-                      location.pathname.includes(item.path)
+                      location.pathname === item.path || location.pathname.includes(item.path)
                         ? theme.palette.mode === "light"
                           ? "#A6C8FF"
                           : blue[400]
