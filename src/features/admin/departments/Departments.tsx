@@ -2,26 +2,24 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import {  Pagination } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useGetAllDepartmentQuery } from "./departmentsApiSlice";
 import Skeleton from "@mui/material/Skeleton";
 import DepartmentCard from "./components/DepartmentCard";
-import { useState } from "react";
 import CustomButton from "@/components/buttons/CustomButton";
-import Header from "@/components/Header";
 import { EmptyPage } from "@/components/empty/EmptyPage";
 import emptyList from "../../../assets/animations/emptyList.json";
 import { Department } from "./types";
+import { useNavigate } from "react-router-dom";
+import Header from "@components/Header";
 
 export default function Departments() {
   const navigate = useNavigate();
-  const [page, setPage] = useState<number>(1);
+  // const [page, setPage] = useState<number>(1);
   const { data, isLoading } = useGetAllDepartmentQuery();
   const departmentsData = data || [];
-  const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
+  // const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+  //   setPage(value);
+  // };
   if (isLoading) {
     return (
       <Grid container spacing={2} sx={{ p: 3 }}>

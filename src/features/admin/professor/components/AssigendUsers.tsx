@@ -25,14 +25,13 @@ export default function AssigendUsers(profname: dataprops) {
   const [pageSize, setPageSize] = useState<number>(10);
 
   // students assigned
-  const { isLoading: studentsLoading, data: students } =
-    useGetAssignedStudentsQuery({
-      username: profname.username,
-      page: {
-        pageNo: page > 0 ? page - 1 : 0,
-        pageSize: pageSize,
-      },
-    });
+  const { isLoading: studentsLoading, data: students } = useGetAssignedStudentsQuery({
+    username: profname.username,
+    page: {
+      pageNo: page > 0 ? page - 1 : 0,
+      pageSize: pageSize,
+    },
+  });
 
   const studentsData =
     students?.content.map((student) => ({
@@ -42,22 +41,21 @@ export default function AssigendUsers(profname: dataprops) {
     })) || [];
 
   console.log("studentsData", studentsData);
-  const handleCellDoubleClickStudent = (params: GridCellParams) => {
-    const id = params.row.username;
-    navigate("/app/admin/students/student-info", { state: { code: id } });
-  };
+  // const handleCellDoubleClickStudent = (params: GridCellParams) => {
+  //   const id = params.row.username;
+  //   navigate("/app/admin/students/student-info", { state: { code: id } });
+  // };
 
   // professors assigned
-  const { data: professors, isLoading: ProfessorsLoading } =
-    useGetAssignedProfessorsQuery({
-      username: profname.username,
-      page: {
-        pageNo: page > 0 ? page - 1 : 0,
-        pageSize: pageSize,
-      },
-    });
+  const { data: professors, isLoading: ProfessorsLoading } = useGetAssignedProfessorsQuery({
+    username: profname.username,
+    page: {
+      pageNo: page > 0 ? page - 1 : 0,
+      pageSize: pageSize,
+    },
+  });
   const professorsData =
-    professors?.content.map((professors:Professor) => ({
+    professors?.content.map((professors: Professor) => ({
       supervisor: profname.username,
       ...professors,
     })) || [];

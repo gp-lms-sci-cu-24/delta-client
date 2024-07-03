@@ -1,7 +1,5 @@
 import { Box, Typography,Card } from '@mui/material';
 import { useResponsiveStack } from '@services/responsive';
-import * as React from 'react';
-import Chart from 'react-google-charts';
 import { ReactElement } from 'react';
 
 export interface IProps {

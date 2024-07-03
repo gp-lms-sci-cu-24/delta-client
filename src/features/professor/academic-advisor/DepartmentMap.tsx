@@ -1,5 +1,5 @@
 import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
-import { departmentColumns, departmentrows } from "./DepartmentMapsData";
+import { departmentColumns } from "./DepartmentMapsData"; 
 import CustomDataGrid from "./components/CustomDataGrid";
 import { useEffect, useState } from "react";
 import { CumulativeResultDto } from "./type";

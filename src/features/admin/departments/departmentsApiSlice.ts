@@ -1,4 +1,4 @@
-import { apiSlice, MessageResponse, Page, PageQuery } from "@/app/api";
+import { apiSlice, MessageResponse } from "@/app/api";
 import {
   CreateDepartmentDto,
   Department,

@@ -26,7 +26,7 @@ function UpdateDepartment() {
   const departmentQuery = useGetDepartmentQuery(code || "__");
   const { isSmallDown } = useResponsiveStack();
   const [updateDepartment, { isLoading }] = useUpdateDepartmentMutation();
-  const [uploadDepartmentImage, uploadImageState] =
+  const [uploadDepartmentImage] =
     useUploadDepartmentImageMutation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const {

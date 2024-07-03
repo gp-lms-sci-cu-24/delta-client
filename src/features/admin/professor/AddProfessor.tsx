@@ -16,7 +16,7 @@ function AddProfessor() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [AddProfessor, { isLoading }] = useAddProfessorMutation();
+  const [AddProfessor] = useAddProfessorMutation();
   const { isSmallDown } = useResponsiveStack();
   const {
     register,

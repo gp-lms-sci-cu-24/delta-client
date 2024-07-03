@@ -19,7 +19,7 @@ const DepartmentForm: React.FC = () => {
   const { isSmallDown } = useResponsiveStack();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [addDepartmant, { isLoading }] = useAddDepartmentMutation();
-  const [uploadDepartmentImage, uploadImageState] =
+  const [uploadDepartmentImage] =
     useUploadDepartmentImageMutation();
 
   const {

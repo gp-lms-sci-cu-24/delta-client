@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Box, Button, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
 import {
-  CreateProfessor,
   UpdateProfessor,
   degreeVaildation,
   degrees,
@@ -12,7 +11,7 @@ import {
 } from "./professorApiSlice";
 import { useSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useResponsiveStack } from "@/services/responsive";
 import Loading from "@/components/Loading";
 import Header from "@/components/Header";
@@ -37,7 +36,6 @@ function EditProfessor() {
     handleSubmit,
     setValue,
     formState: { errors },
-    reset,
   } = useForm<UpdateProfessor>();
 
   useEffect(() => {

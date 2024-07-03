@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Box, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -17,7 +17,6 @@ const SendAnnouncement: React.FC = () => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<CreateAnnouncementDto>();
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,9 +83,7 @@ const SendAnnouncement: React.FC = () => {
                   label={"User Name"}
                   inputProps={register("userName", { required: true })}
                   error={Boolean(errors.userName)}
-                  helperText={
-                    Boolean(errors.userName) === true ? "Required" : " "
-                  }
+                  helperText={Boolean(errors.userName) === true ? "Required" : " "}
                   variant="outlined"
                 />
               </Stack>
@@ -109,11 +106,7 @@ const SendAnnouncement: React.FC = () => {
               />
             </Stack>
 
-            <Stack
-              direction={isSmallDown ? "column" : "row"}
-              sx={{ gap: 2 }}
-              spacing={2}
-            >
+            <Stack direction={isSmallDown ? "column" : "row"} sx={{ gap: 2 }} spacing={2}>
               <InputField
                 label="Announcement Description"
                 inputProps={register("description", {
@@ -121,9 +114,7 @@ const SendAnnouncement: React.FC = () => {
                   minLength: 3,
                 })}
                 error={Boolean(errors.description)}
-                helperText={
-                  Boolean(errors.description) === true ? "Required" : " "
-                }
+                helperText={Boolean(errors.description) === true ? "Required" : " "}
                 variant={"outlined"}
                 multiline
                 rows={4}

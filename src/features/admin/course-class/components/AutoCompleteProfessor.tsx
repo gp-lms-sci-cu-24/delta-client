@@ -9,7 +9,7 @@ export interface IAutoCompleteProfessorProps {
 
 export function AutoCompleteProffesor(props: IAutoCompleteProfessorProps) {
   const { value: Professor, onChange: setProfessor } = props;
-   const [searchMutation, mutationState] = useSearchProfessorsMutation()
+   const [searchMutation] = useSearchProfessorsMutation()
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState<string[]>([]);
 

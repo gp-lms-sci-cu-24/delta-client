@@ -1,4 +1,4 @@
-import { apiSlice, Page } from "@/app/api";
+import { apiSlice } from "@/app/api";
 import { DashboardDto } from "./type";
 
 const dashboardApiSlice = apiSlice.injectEndpoints({

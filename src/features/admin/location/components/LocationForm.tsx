@@ -18,7 +18,7 @@ const LocationForm: React.FC = () => {
   const { isSmallDown } = useResponsiveStack();
   const [image, setImage] = React.useState<ImageListType>([]);
   const [addLocation, { isLoading }] = useAddLocationMutation();
-  const [uploadLoctionImage, uploadImageState] =
+  const [uploadLoctionImage] =
     useUploadLocationImageMutation();
   const onChange = (
     imageList: ImageListType,
